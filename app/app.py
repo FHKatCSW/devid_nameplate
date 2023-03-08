@@ -1,10 +1,10 @@
 import sys
 import json
 import requests
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QColor, QPainter
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QColor, QPainter
 from app.funs.rest import RestApiClient
 from app.funs.status_led import RestLed
 
@@ -51,8 +51,8 @@ class MyWindow(QMainWindow):
         self.results_idev_cycle = []
         self.results_ldev_cycle = []
 
-        self.color_on = QColor(Qt.green)
-        self.color_off = QColor(Qt.red)
+        self.color_on = QColor(124,252,0)
+        self.color_off = QColor(255,99,71)
         #self.state = False
 
         # Create tabs

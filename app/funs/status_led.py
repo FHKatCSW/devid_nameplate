@@ -1,6 +1,6 @@
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QColor, QPainter
-from PyQt5.QtWidgets import QWidget
+from PyQt6.QtCore import Qt, QTimer
+from PyQt6.QtGui import QColor, QPainter
+from PyQt6.QtWidgets import QWidget
 from .rest import RestApiClient
 
 import requests
@@ -12,8 +12,8 @@ class RestLed(QWidget):
 
         self.url = url
         self.endpoint = endpoint
-        self.color_on = QColor(Qt.green)
-        self.color_off = QColor(Qt.red)
+        self.color_on = QColor(124,252,0)
+        self.color_off = QColor(255,99,71)
         self.state = False
 
         self.timer = QTimer(self)
@@ -34,7 +34,7 @@ class RestLed(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        #painter.setRenderHint(QPainter.Antialiasing)
 
         if self.state:
             painter.setBrush(self.color_on)
