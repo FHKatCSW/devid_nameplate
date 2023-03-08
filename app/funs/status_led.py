@@ -1,6 +1,6 @@
-from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QColor, QPainter
-from PyQt6.QtWidgets import QWidget
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QColor, QPainter
+from PyQt5.QtWidgets import QWidget
 from .rest import RestApiClient
 
 import requests

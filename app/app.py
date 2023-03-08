@@ -1,10 +1,10 @@
 import sys
 import json
 import requests
-from PyQt6.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout
-from PyQt6.QtCore import Qt, QTimer
-from PyQt6.QtGui import QColor, QPainter
+from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtGui import QColor, QPainter
 from app.funs.rest import RestApiClient
 from app.funs.status_led import RestLed
 
