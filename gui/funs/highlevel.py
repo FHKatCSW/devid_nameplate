@@ -28,7 +28,7 @@ class HighlevelIdev:
 
     def provide(self):
         call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
-        response = call.get(endpoint="/idev-highlvl/provide")
+        response = call.get(endpoint="/idev-highlvl/actual")
         return response
 
 
@@ -56,5 +56,5 @@ class HighlevelLdev:
 
     def provide(self):
         call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
-        response = call.get(endpoint="/ldev-highlvl/provide")
+        response = call.get(endpoint="/ldev-highlvl/actual")
         return response

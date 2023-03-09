@@ -86,7 +86,7 @@ class MyWindow(QMainWindow):
         self.status_label_rest.setFixedHeight(50)
         self.status_label_rest.setFixedWidth(200)
         self.status_grid.addWidget(self.status_label_rest, 0, 0)
-        rest_led = RestLed(url="http://0.0.0.0:5000/v1", endpoint="/status/rest")
+        rest_led = RestLed(url="http://0.0.0.0:5000/v1", endpoint="/mgmt/status/rest")
         self.status_grid.addWidget(rest_led, 0, 1)
 
         # Status for HSM
