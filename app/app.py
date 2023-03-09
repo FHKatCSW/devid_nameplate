@@ -4,7 +4,7 @@ import requests
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout
 from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QColor, QPainter
+from PyQt5.QtGui import QColor, QPainter, QScreen
 from app.funs.rest import RestApiClient
 from app.funs.status_led import RestLed
 
@@ -63,6 +63,10 @@ class MyWindow(QMainWindow):
         # Create tabs
         self.tabs = QTabWidget()
         self.setCentralWidget(self.tabs)
+
+        # Get the size of the screen
+        screen = QScreen()
+        screen_size = screen.size()
 
         # ------------------
         # Tab for Status
@@ -161,8 +165,17 @@ class MyWindow(QMainWindow):
         # Add label for IDevID
         self.output_idev = QLabel(self.tab2)
         self.output_idev.setWordWrap(True)
+
+        # Set the maximum size of the label to fit on the screen
+        max_width = int(screen_size.width() * 0.9)  # Use 90% of the screen width
+        max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
+        self.output_idev.setMaximumSize(max_width, max_height)
+        self.output_idev.setAlignment(Qt.AlignCenter)
+
         layout = QVBoxLayout(self.tab2)
         layout.addWidget(self.output_idev)
+
+
 
         # Set up timer for IDevID API call
         self.timer = QTimer(self)
