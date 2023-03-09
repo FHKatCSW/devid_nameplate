@@ -69,6 +69,7 @@ class MyWindow(QMainWindow):
         # Status for REST API
         self.status_label_rest = QLabel("REST API")
         self.status_label_rest.setFixedHeight(50)
+        self.status_label_rest.setFixedWidth(200)
         self.status_grid.addWidget(self.status_label_rest, 0, 0)
         rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(rest_led, 0, 1)
