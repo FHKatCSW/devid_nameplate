@@ -77,6 +77,7 @@ class MyWindow(QMainWindow):
         # Status for HSM
         self.status_label_hsm = QLabel("HSM")
         self.status_label_hsm.setFixedHeight(50)
+        self.status_label_hsm.setFixedWidth(200)
         self.status_grid.addWidget(self.status_label_hsm, 1, 0)
         hsm_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(hsm_led, 1, 1)
@@ -85,6 +86,7 @@ class MyWindow(QMainWindow):
         # Status for IDevID
         self.status_label_idev = QLabel("IDevID")
         self.status_label_idev.setFixedHeight(50)
+        self.status_label_idev.setFixedWidth(200)
         self.status_grid.addWidget(self.status_label_idev, 2, 0)
         idev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(idev_led, 2, 1)
@@ -92,6 +94,7 @@ class MyWindow(QMainWindow):
         # Status for LDevID
         self.status_label_ldev = QLabel("LDevID")
         self.status_label_ldev.setFixedHeight(50)
+        self.status_label_ldev.setFixedWidth(200)
         self.status_grid.addWidget(self.status_label_ldev, 3, 0)
         ldev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(ldev_led, 3, 1)
