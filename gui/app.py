@@ -6,9 +6,9 @@ from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget
 
-from funs.highlevel import HighlevelIdev, HighlevelLdev
-from funs.rest import RestApiClient
-from funs.status_led import RestLed
+from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
+from gui.funs.rest import RestApiClient
+from gui.funs.status_led import RestLed
 
 
 class MyWindow(QMainWindow):

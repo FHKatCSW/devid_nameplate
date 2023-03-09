@@ -3,7 +3,7 @@ import json
 import requests
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel
 from PyQt5.QtCore import Qt, QTimer
-from app.funs.rest import RestApiClient
+from gui.funs.rest import RestApiClient
 
 class MyWindow(QMainWindow):
     def __init__(self):

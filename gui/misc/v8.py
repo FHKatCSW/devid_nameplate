@@ -5,8 +5,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBo
     QGridLayout
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor, QPainter
-from app.funs.rest import RestApiClient
-from app.funs.status_led import RestLed
+from gui.funs.rest import RestApiClient
+from gui.funs.status_led import RestLed
 
 class MyWindow(QMainWindow):
     def __init__(self):
