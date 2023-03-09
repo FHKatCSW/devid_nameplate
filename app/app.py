@@ -94,7 +94,7 @@ class MyWindow(QMainWindow):
         self.status_grid.addWidget(self.status_idev, 3, 0)
         ldev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(ldev_led, 3, 1)
-        self.status_grid.setAlignment(ldev_led, Qt.AlignCenter)
+        #self.status_grid.setAlignment(ldev_led, Qt.AlignCenter)
 
         self.tab0 = QWidget()
         self.tabs.addTab(self.tab0, 'Status')
