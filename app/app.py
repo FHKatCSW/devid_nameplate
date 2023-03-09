@@ -72,24 +72,29 @@ class MyWindow(QMainWindow):
         self.status_grid.addWidget(self.status_idev, 0, 0)
         rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(rest_led, 0, 1)
+        self.status_grid.setAlignment(rest_led, Qt.AlignVCenter)
 
         # Status for HSM
         self.status_idev = QLabel("HSM")
         self.status_grid.addWidget(self.status_idev, 1, 0)
-        rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
-        self.status_grid.addWidget(rest_led, 1, 1)
+        hsm_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
+        self.status_grid.addWidget(hsm_led, 1, 1)
+        self.status_grid.setAlignment(hsm_led, Qt.AlignVCenter)
+
 
         # Status for IDevID
         self.status_idev = QLabel("IDevID")
         self.status_grid.addWidget(self.status_idev, 2, 0)
-        rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
-        self.status_grid.addWidget(rest_led, 2, 1)
+        idev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
+        self.status_grid.addWidget(idev_led, 2, 1)
+        self.status_grid.setAlignment(idev_led, Qt.AlignVCenter)
 
         # Status for IDevID
         self.status_idev = QLabel("LDevID")
         self.status_grid.addWidget(self.status_idev, 3, 0)
-        rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
-        self.status_grid.addWidget(rest_led, 3, 1)
+        ldev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
+        self.status_grid.addWidget(ldev_led, 3, 1)
+        self.status_grid.setAlignment(ldev_led, Qt.AlignVCenter)
 
         self.tab0 = QWidget()
         self.tabs.addTab(self.tab0, 'Status')
