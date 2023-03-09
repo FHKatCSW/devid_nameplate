@@ -68,33 +68,33 @@ class MyWindow(QMainWindow):
         self.status_grid.setSpacing(5)
 
         # Status for REST API
-        self.status_idev = QLabel("REST API")
-        self.status_grid.addWidget(self.status_idev, 0, 0)
+        self.status_label_rest = QLabel("REST API")
+        self.status_label_rest.setFixedHeight(30)
+        self.status_grid.addWidget(self.status_label_rest, 0, 0)
         rest_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(rest_led, 0, 1)
-        self.status_grid.setAlignment(rest_led, Qt.AlignVCenter)
 
         # Status for HSM
-        self.status_idev = QLabel("HSM")
-        self.status_grid.addWidget(self.status_idev, 1, 0)
+        self.status_label_hsm = QLabel("HSM")
+        self.status_label_hsm.setFixedHeight(30)
+        self.status_grid.addWidget(self.status_label_hsm, 1, 0)
         hsm_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(hsm_led, 1, 1)
-        self.status_grid.setAlignment(hsm_led, Qt.AlignVCenter)
 
 
         # Status for IDevID
-        self.status_idev = QLabel("IDevID")
-        self.status_grid.addWidget(self.status_idev, 2, 0)
+        self.status_label_idev = QLabel("IDevID")
+        self.status_label_idev.setFixedHeight(30)
+        self.status_grid.addWidget(self.status_label_idev, 2, 0)
         idev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(idev_led, 2, 1)
-        self.status_grid.setAlignment(idev_led, Qt.AlignVCenter)
 
-        # Status for IDevID
-        self.status_idev = QLabel("LDevID")
-        self.status_grid.addWidget(self.status_idev, 3, 0)
+        # Status for LDevID
+        self.status_label_ldev = QLabel("LDevID")
+        self.status_label_ldev.setFixedHeight(30)
+        self.status_grid.addWidget(self.status_label_ldev, 3, 0)
         ldev_led = RestLed(url="https://api.example.com/check-status", endpoint="/v1")
         self.status_grid.addWidget(ldev_led, 3, 1)
-        #self.status_grid.setAlignment(ldev_led, Qt.AlignCenter)
 
         self.tab0 = QWidget()
         self.tabs.addTab(self.tab0, 'Status')
