@@ -43,7 +43,8 @@ class MyWindow(QMainWindow):
                 padding: 3px;
                 margin: 3px;
                 color: black;
-                font-size: 6pt;
+                font-size: 10pt;
+                height: 40pt;
             }
         ''')
 

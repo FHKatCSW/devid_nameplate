@@ -41,4 +41,4 @@ class RestLed(QWidget):
         else:
             painter.setBrush(self.color_off)
 
-        painter.drawEllipse(0, 0, 20, 20)
+        painter.drawEllipse(0, 0, 40, 40)
