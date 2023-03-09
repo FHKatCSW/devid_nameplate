@@ -1,7 +1,7 @@
 import requests
 import json
 
-from app.funs.rest import RestApiClient
+from .rest import RestApiClient
 
 
 class HighlevelIdev:
@@ -13,7 +13,7 @@ class HighlevelIdev:
 
     def delete(self):
         call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
-        response = call.post(endpoint="/idev-highlvl/delete")
+        response = call.delete(endpoint="/idev-highlvl/delete")
         return response
 
     def validate(self):
@@ -41,7 +41,7 @@ class HighlevelLdev:
 
     def delete(self):
         call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
-        response = call.post(endpoint="/ldev-highlvl/delete")
+        response = call.delete(endpoint="/ldev-highlvl/delete")
         return response
 
     def validate(self):
