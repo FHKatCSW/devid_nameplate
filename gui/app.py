@@ -252,7 +252,7 @@ class MyWindow(QMainWindow):
             self.led_delete_idev.setStyleSheet("background-color: green")
         else:
             self.led_delete_idev.setStyleSheet("background-color: red")
-        self.results_control_idev.append(json.dumps(response))
+        self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def provision_idev(self):
@@ -284,7 +284,7 @@ class MyWindow(QMainWindow):
             self.led_delete_ldev.setStyleSheet("background-color: green")
         else:
             self.led_delete_ldev.setStyleSheet("background-color: red")
-        self.results_control_ldev.append(json.dumps(response))
+        self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def provision_ldev(self):
