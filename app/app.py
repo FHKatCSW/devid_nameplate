@@ -32,6 +32,7 @@ class MyWindow(QMainWindow):
                 border-radius: 5px;
                 padding: 5px;
                 color: black;
+                font-size: 8pt;
             }
             QTabBar::tab:selected {
                 background-color: #adacac;
