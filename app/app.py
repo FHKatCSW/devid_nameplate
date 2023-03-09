@@ -2,7 +2,7 @@ import sys
 import json
 import requests
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
-    QGridLayout
+    QGridLayout, QDesktopWidget
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor, QPainter, QScreen
 from app.funs.rest import RestApiClient
@@ -65,8 +65,7 @@ class MyWindow(QMainWindow):
         self.setCentralWidget(self.tabs)
 
         # Get the size of the screen
-        screen = QScreen()
-        screen_size = screen.size()
+        screen_size = QDesktopWidget().screenGeometry().size()
 
         # ------------------
         # Tab for Status
