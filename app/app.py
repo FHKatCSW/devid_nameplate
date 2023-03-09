@@ -66,6 +66,9 @@ class MyWindow(QMainWindow):
 
         # Get the size of the screen
         screen_size = QDesktopWidget().screenGeometry().size()
+        # Set the maximum size of the label to fit on the screen
+        max_width = int(screen_size.width() * 1)  # Use 90% of the screen width
+        max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
 
         # ------------------
         # Tab for Status
@@ -164,10 +167,6 @@ class MyWindow(QMainWindow):
         # Add label for IDevID
         self.output_idev = QLabel(self.tab2)
         self.output_idev.setWordWrap(True)
-
-        # Set the maximum size of the label to fit on the screen
-        max_width = int(screen_size.width() * 0.9)  # Use 90% of the screen width
-        max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
         self.output_idev.setMaximumSize(max_width, max_height)
         self.output_idev.setAlignment(Qt.AlignCenter)
 
@@ -190,6 +189,8 @@ class MyWindow(QMainWindow):
         # Add label for LDevID
         self.output_ldev = QLabel(self.tab3)
         self.output_ldev.setWordWrap(True)
+        self.output_ldev.setMaximumSize(max_width, max_height)
+        self.output_ldev.setAlignment(Qt.AlignCenter)
 
         layout = QVBoxLayout(self.tab3)
         layout.addWidget(self.output_ldev)
