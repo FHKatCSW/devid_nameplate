@@ -23,10 +23,6 @@ class MyWindow(QMainWindow):
                 color: black;
                 font-size: 10pt;
             }
-            QTabWidget::tab:selected {
-                background-color: #adacac;
-                font-weight: bold;
-            }
             QTabBar::tab {
                 margin-left:2px;
                 margin-right:2px;
@@ -36,6 +32,10 @@ class MyWindow(QMainWindow):
                 border-radius: 5px;
                 padding: 5px;
                 color: black;
+            }
+            QTabBar::tab:selected {
+                background-color: #adacac;
+                font-weight: bold;
             }
             QPushButton:hover {
                 background-color: #DDDDDD;
