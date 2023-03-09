@@ -263,7 +263,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_idev.setStyleSheet("background-color: red")
         #print(response)
-        self.results_control_idev.append(json.dumps(response))
+        self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def validate_idev(self):
@@ -274,7 +274,7 @@ class MyWindow(QMainWindow):
             self.led_validate_idev.setStyleSheet("background-color: green")
         else:
             self.led_validate_idev.setStyleSheet("background-color: red")
-        self.results_control_idev.append(json.dumps(response))
+        self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def delete_ldev(self):
@@ -295,7 +295,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_ldev.setStyleSheet("background-color: red")
         #print(response)
-        self.results_control_ldev.append(json.dumps(response))
+        self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def validate_ldev(self):
@@ -306,20 +306,20 @@ class MyWindow(QMainWindow):
             self.led_validate_ldev.setStyleSheet("background-color: green")
         else:
             self.led_validate_ldev.setStyleSheet("background-color: red")
-        self.results_control_ldev.append(json.dumps(response))
+        self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def cycle_idev_api_call(self):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response))
+        self.results_idev_cycle.append(json.dumps(response["message"]))
         self.output_idev.setText(json.dumps(self.results_idev_cycle[-1]))
 
     def cycle_ldev_api_call(self):
         # Perform API call 3 and update label text
         call = RestApiClient(base_url='https://api.example.com/1')
         response = call.post(endpoint="/v1")
-        self.results_ldev_cycle.append(json.dumps(response))
+        self.results_ldev_cycle.append(json.dumps(response["message"]))
         self.output_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
 
 
