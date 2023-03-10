@@ -115,6 +115,10 @@ class MyWindow(QMainWindow):
         self.tabs.addTab(self.tab0, 'Status')
         self.tab0.setLayout(self.status_grid)
 
+        close_button = QPushButton('Close Application', self)
+        close_button.clicked.connect(self.close)
+        self.status_grid.addWidget(close_button)
+
         # ------------------
         # Control IDevID
         # ------------------
