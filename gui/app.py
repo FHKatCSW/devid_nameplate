@@ -128,7 +128,7 @@ class MyWindow(QMainWindow):
         self.control_grid_idev.setSpacing(5)
 
         self.result_label_idev = QLabel(self)
-        self.result_label_idev.setFixedSize(300,200)
+        self.result_label_idev.setFixedSize(300,250)
         self.result_label_idev.move(80, 80)
         self.result_label_idev.setWordWrap(True)
 
@@ -147,13 +147,13 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_delete_idev = QLabel()
-        self.led_delete_idev.setFixedSize(20, 20)
-        self.control_grid_idev.addWidget(self.led_delete_idev, 0, 1)
-        # Button 2
         self.led_provision_idev = QLabel()
         self.led_provision_idev.setFixedSize(20, 20)
-        self.control_grid_idev.addWidget(self.led_provision_idev, 1, 1)
+        self.control_grid_idev.addWidget(self.led_provision_idev, 0, 1)
+        # Button 2
+        self.led_delete_idev = QLabel()
+        self.led_delete_idev.setFixedSize(20, 20)
+        self.control_grid_idev.addWidget(self.led_delete_idev, 1, 1)
         # Button 3
         self.led_validate_idev = QLabel()
         self.led_validate_idev.setFixedSize(20, 20)
@@ -177,15 +177,19 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.setSpacing(5)
 
         self.result_label_ldev = QLabel(self)
+        self.result_label_idev.setFixedSize(300,250)
         self.result_label_ldev.move(80, 80)
         self.result_label_ldev.setWordWrap(True)
 
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 2, 3, 2)
 
         # Create buttons for first tab
-        self.button_bootstrap_ldev = QPushButton('Bootstrap LDev')
-        self.button_delete_ldev = QPushButton('Delete LDev')
-        self.button_validate_ldev = QPushButton('Validate LDev')
+        self.button_bootstrap_ldev = QPushButton('Bootstrap\nLDev')
+        self.button_delete_ldev = QPushButton('Delete\nLDev')
+        self.button_validate_ldev = QPushButton('Validate\nLDev')
+        self.button_bootstrap_ldev.setFixedSize(100,40)
+        self.button_delete_ldev.setFixedSize(100,40)
+        self.button_validate_ldev.setFixedSize(100,40)
         self.control_grid_ldev.addWidget(self.button_bootstrap_ldev, 0, 0)
         self.control_grid_ldev.addWidget(self.button_delete_ldev, 1, 0)
         self.control_grid_ldev.addWidget(self.button_validate_ldev, 2, 0)
