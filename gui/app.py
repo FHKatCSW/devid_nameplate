@@ -14,7 +14,18 @@ from gui.funs.status_led import RestLed
 class NameplateLabel(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setFixedSize(300, 250)
+        self.setFixedSize(250, 40)
+        self.move(30, 30)
+        self.setWordWrap(True)
+        font = QFont()
+        font.setPointSize(7)
+        self.setFont(font)
+
+class NameplateLabelHeader(QLabel):
+    def __init__(self, text="",parent=None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setFixedSize(150, 40)
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
@@ -266,18 +277,13 @@ class MyWindow(QMainWindow):
 
         # Produced
         self.actual_idev_produced = NameplateLabel(self)
-
-        self.actual_idev_produced_label = QLabel('Produced:')
-        self.actual_idev_produced_label.setFixedSize(150,40)
+        self.actual_idev_produced_label = NameplateLabelHeader("Produced:")
 
         self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 1)
 
         # Pseudonym
-        self.actual_idev_pseudonym = QLabel(self)
-        self.actual_idev_pseudonym.setFixedSize(200,40)
-        self.actual_idev_pseudonym.move(15, 15)
-        self.actual_idev_pseudonym.setWordWrap(True)
+        self.actual_idev_pseudonym = NameplateLabel(self)
 
         self.actual_idev_pseudonym_label = QLabel('Product:')
         self.actual_idev_pseudonym_label.setFixedSize(150,40)
@@ -286,10 +292,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 1)
 
         # Serial Number
-        self.actual_idev_serial = QLabel(self)
-        self.actual_idev_serial.setFixedSize(200,40)
-        self.actual_idev_serial.move(15, 15)
-        self.actual_idev_serial.setWordWrap(True)
+        self.actual_idev_serial = NameplateLabel(self)
 
         self.actual_idev_serial_label = QLabel('Serial No.:')
         self.actual_idev_serial_label.setFixedSize(150,40)
@@ -298,10 +301,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.addWidget(self.actual_idev_serial, 4, 1)
 
         # Country
-        self.actual_idev_country = QLabel(self)
-        self.actual_idev_country.setFixedSize(200,40)
-        self.actual_idev_country.move(15, 15)
-        self.actual_idev_country.setWordWrap(True)
+        self.actual_idev_country = NameplateLabel(self)
 
         self.actual_idev_country_label = QLabel('Country:')
         self.actual_idev_country_label.setFixedSize(150,40)
