@@ -49,8 +49,8 @@ class NameplateLabelHeader(QLabel):
     def __init__(self, text="",parent=None):
         super().__init__(parent)
         self.setText(text)
-        self.setFixedSize(150, 60)
-        self.move(30, 30)
+        self.setFixedSize(150, 40)
+        self.move(15, 15)
         font = QFont()
         font.setPointSize(20)
         self.setFont(font)
