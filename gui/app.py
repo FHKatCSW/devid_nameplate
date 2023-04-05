@@ -49,6 +49,17 @@ class NameplateLabelHeader(QLabel):
         font.setPointSize(16)
         self.setFont(font)
 
+class NameplateHeader(QLabel):
+    def __init__(self, text="",parent=None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setFixedSize(150, 40)
+        self.move(30, 30)
+        self.setWordWrap(True)
+        font = QFont()
+        font.setPointSize(20)
+        self.setFont(font)
+
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -253,11 +264,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev = QGridLayout()
         self.control_grid_act_idev.setSpacing(3)
 
-        self.actual_idev_nameplate = QLabel('Nameplate')
-        idev_nameplate_font = self.actual_idev_nameplate .font()
-        idev_nameplate_font.setBold(True)
-        self.actual_idev_nameplate.setFont(idev_nameplate_font)
-        self.actual_idev_nameplate.setFixedSize(150,40)
+        self.actual_idev_nameplate = NameplateHeader('Nameplate')
         self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 0)
 
 
