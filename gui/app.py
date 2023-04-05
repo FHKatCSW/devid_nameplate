@@ -5,6 +5,7 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget
+from PyQt5.QtGui import QIcon
 
 from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
@@ -196,13 +197,13 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_delete_ldev = QLabel()
-        self.led_delete_ldev.setFixedSize(20, 20)
-        self.control_grid_ldev.addWidget(self.led_delete_ldev, 0, 1)
-        # Button 2
         self.led_provision_ldev = QLabel()
         self.led_provision_ldev.setFixedSize(20, 20)
-        self.control_grid_ldev.addWidget(self.led_provision_ldev, 1, 1)
+        self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 1)
+        # Button 2
+        self.led_delete_ldev = QLabel()
+        self.led_delete_ldev.setFixedSize(20, 20)
+        self.control_grid_ldev.addWidget(self.led_delete_ldev, 1, 1)
         # Button 3
         self.led_validate_ldev = QLabel()
         self.led_validate_ldev.setFixedSize(20, 20)
@@ -220,22 +221,34 @@ class MyWindow(QMainWindow):
         # ------------------
         # Tab for the IDevID
         # ------------------
+
         self.tab2 = QWidget()
         self.tabs.addTab(self.tab2, 'IDevID')
 
-        # Add label for IDevID
-        self.output_idev = QLabel(self.tab2)
-        self.output_idev.setWordWrap(True)
-        self.output_idev.setMaximumSize(max_width, max_height)
-        self.output_idev.setAlignment(Qt.AlignCenter)
+        self.control_grid_act_idev = QGridLayout()
+        self.control_grid_act_idev.setSpacing(5)
 
-        layout = QVBoxLayout(self.tab2)
-        layout.addWidget(self.output_idev)
+        self.result_actual_idev = QLabel(self)
+        self.result_actual_idev.setFixedSize(350,250)
+        self.result_actual_idev.move(80, 80)
+        self.result_actual_idev.setWordWrap(True)
 
-        # Set up timer for IDevID API call
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.cycle_idev_api_call)
-        self.timer.start(5000)
+        self.control_grid_act_idev.addWidget(self.result_actual_idev, 0, 1, 1, 1)
+
+        self.button_reload_idev = QPushButton()
+        icon = QIcon("rotate-right-solid.svg")  # Load the icon from a file path
+        self.button_reload_idev.setIcon(icon)
+        self.button_reload_idev.setIconSize(self.button_reload_idev.size())
+        self.button_reload_idev.setFixedSize(50, 50)
+        self.button_reload_idev.move(75, 75)
+        self.control_grid_act_idev.addWidget(self.button_bootstrap_ldev, 0, 0)
+
+
+        self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
+
+        self.tab_actual_idev = QWidget()
+        self.tabs.addTab(self.tab_actual_idev, 'IDev')
+        self.tab_actual_idev.setLayout(self.control_grid_act_idev)
 
         # ------------------
         # Tab for the LDevID
@@ -333,6 +346,12 @@ class MyWindow(QMainWindow):
         response = call.post(endpoint="/v1")
         self.results_ldev_cycle.append(json.dumps(response["message"]))
         self.output_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
+
+    def load_actual_idev(self):
+        idevapi = HighlevelIdev()
+        response = idevapi.provide()
+        self.results_idev_cycle.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_idev_cycle[-1]))
 
 
 if __name__ == '__main__':
