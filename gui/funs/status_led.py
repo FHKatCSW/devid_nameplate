@@ -19,7 +19,7 @@ class RestLed(QWidget):
         self.state = False
 
         self.timer = QTimer(self)
-        self.timer.setInterval(5000)  # call API every 5 seconds
+        self.timer.setInterval(30000)  # call API every 30 seconds
         self.timer.timeout.connect(self.update_state)
         self.timer.start()
 
