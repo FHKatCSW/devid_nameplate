@@ -249,22 +249,29 @@ class MyWindow(QMainWindow):
         # ------------------
         # Tab for the LDevID
         # ------------------
-        self.tab3 = QWidget()
-        self.tabs.addTab(self.tab3, 'LDevID')
+        self.control_grid_act_ldev = QGridLayout()
+        self.control_grid_act_ldev.setSpacing(5)
 
-        # Add label for LDevID
-        self.output_ldev = QLabel(self.tab3)
-        self.output_ldev.setWordWrap(True)
-        self.output_ldev.setMaximumSize(max_width, max_height)
-        self.output_ldev.setAlignment(Qt.AlignCenter)
+        self.result_actual_ldev = QLabel(self)
+        self.result_actual_ldev.setFixedSize(350,250)
+        self.result_actual_ldev.move(30, 30)
+        self.result_actual_ldev.setWordWrap(True)
 
-        layout = QVBoxLayout(self.tab3)
-        layout.addWidget(self.output_ldev)
+        self.control_grid_act_ldev.addWidget(self.result_actual_ldev, 0, 1, 1, 1)
 
-        # Set up timer for LDevID API call
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.cycle_ldev_api_call)
-        self.timer.start(5000)
+        self.button_reload_ldev = QPushButton()
+        icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
+        self.button_reload_ldev.setIcon(icon)
+        self.button_reload_ldev.setIconSize(QSize(32, 32))
+        self.button_reload_ldev.setFixedSize(50, 50)
+        self.control_grid_act_ldev.addWidget(self.button_reload_ldev, 0, 0)
+
+
+        self.button_reload_ldev.clicked.connect(lambda: self.load_actual_ldev())
+
+        self.tab_actual_ldev = QWidget()
+        self.tabs.addTab(self.tab_actual_ldev, 'IDevID')
+        self.tab_actual_ldev.setLayout(self.control_grid_act_ldev)
 
     def delete_idev(self):
         idevapi = HighlevelIdev()
@@ -330,24 +337,18 @@ class MyWindow(QMainWindow):
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
-    def cycle_idev_api_call(self):
-        idevapi = HighlevelIdev()
-        response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["message"]))
-        self.output_idev.setText(json.dumps(self.results_idev_cycle[-1]))
-
-    def cycle_ldev_api_call(self):
-        # Perform API call 3 and update label text
-        call = RestApiClient(base_url='https://api.example.com/1')
-        response = call.post(endpoint="/v1")
-        self.results_ldev_cycle.append(json.dumps(response["message"]))
-        self.output_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
 
     def load_actual_idev(self):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["data"]["issuer"]))
+        self.results_idev_cycle.append(json.dumps(response["data"]))
         self.result_actual_idev.setText(json.dumps(self.results_idev_cycle[-1]))
+
+    def load_actual_ldev(self):
+        ldevapi = HighlevelLdev()
+        response = ldevapi.provide()
+        self.results_ldev_cycle.append(json.dumps(response["data"]["issuer"]))
+        self.result_actual_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
 
 
 if __name__ == '__main__':
