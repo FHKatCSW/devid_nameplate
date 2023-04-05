@@ -1,7 +1,7 @@
 import json
 import sys
 
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt, QTimer, QSize
 from PyQt5.QtGui import QColor
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget
@@ -235,7 +235,7 @@ class MyWindow(QMainWindow):
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
         self.button_reload_idev.setIcon(icon)
-        self.button_reload_idev.setIconSize(self.button_reload_idev.size())
+        self.button_reload_idev.setIconSize(QSize(32, 32))
         self.button_reload_idev.setFixedSize(50, 50)
         self.button_reload_idev.move(75, 75)
         self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 0)
