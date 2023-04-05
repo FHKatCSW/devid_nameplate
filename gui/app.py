@@ -422,11 +422,14 @@ class MyWindow(QMainWindow):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
         self.results_idev_cycle.append(json.dumps(response["data"]))
-        self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
-        self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
-        self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
-        self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
-        self.actual_idev_pseudonym.setText(json.dumps(response["data"]["pseudonym"]))
+        if response["data"] is None:
+            self.actual_idev_producer.setText("No IDevID set")
+        else:
+            self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
+            self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
+            self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
+            self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
+            self.actual_idev_pseudonym.setText(json.dumps(response["data"]["pseudonym"]))
 
 
     def load_actual_ldev(self):
