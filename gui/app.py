@@ -231,7 +231,7 @@ class MyWindow(QMainWindow):
         self.actual_idev_producer.setWordWrap(True)
 
         self.actual_idev_producer_label = QLabel('Producer:')
-        self.actual_idev_producer_label.setFixedSize(100,40)
+        self.actual_idev_producer_label.setFixedSize(150,40)
 
         self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
         self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
