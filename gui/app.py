@@ -18,7 +18,7 @@ class NameplateLabel(QLabel):
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
-        font.setPointSize(3)
+        font.setPointSize(8)
         self.setFont(font)
 
 class NameplateLabelHeader(QLabel):
@@ -29,7 +29,7 @@ class NameplateLabelHeader(QLabel):
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
-        font.setPointSize(8)
+        font.setPointSize(16)
         self.setFont(font)
 
 class MyWindow(QMainWindow):
@@ -72,7 +72,6 @@ class MyWindow(QMainWindow):
                 padding: 3px;
                 margin: 3px;
                 color: black;
-                font-size: 16pt;
             }
         ''')
 
