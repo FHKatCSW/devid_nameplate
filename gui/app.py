@@ -225,12 +225,14 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev = QGridLayout()
         self.control_grid_act_idev.setSpacing(5)
 
-        self.result_actual_idev = QLabel(self)
-        self.result_actual_idev.setFixedSize(350,250)
-        self.result_actual_idev.move(30, 30)
-        self.result_actual_idev.setWordWrap(True)
+        self.actual_idev_producer = QLabel(self)
+        self.actual_idev_producer.setFixedSize(200,40)
+        self.actual_idev_producer.move(15, 15)
+        self.actual_idev_producer.setWordWrap(True)
 
-        self.control_grid_act_idev.addWidget(self.result_actual_idev, 0, 1, 1, 1)
+        self.actual_idev_producer_label = QLabel('Producer:')
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
 
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
@@ -341,8 +343,8 @@ class MyWindow(QMainWindow):
     def load_actual_idev(self):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["data"]))
-        self.result_actual_idev.setText(json.dumps(self.results_idev_cycle[-1]))
+        self.results_idev_cycle.append(json.dumps(response["data"]["o"]))
+        self.actual_idev_producer.setText(json.dumps(self.results_idev_cycle[-1]))
 
     def load_actual_ldev(self):
         ldevapi = HighlevelLdev()
