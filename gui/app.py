@@ -371,8 +371,7 @@ class MyWindow(QMainWindow):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
         self.results_idev_cycle.append(json.dumps(response["data"]))
-        print(json.dumps(response["data"]))
-        self.actual_idev_producer.setText(json.dumps(self.results_idev_cycle[-1][6]))
+        self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
 
     def load_actual_ldev(self):
         ldevapi = HighlevelLdev()
