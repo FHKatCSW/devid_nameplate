@@ -2,7 +2,7 @@ import json
 import sys
 
 from PyQt5.QtCore import Qt, QTimer, QSize
-from PyQt5.QtGui import QColor, QFont
+from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget
 from PyQt5.QtGui import QIcon
@@ -21,6 +21,22 @@ class NameplateLabel(QLabel):
         font.setItalic(True)
         font.setPointSize(12)
         self.setFont(font)
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        # Draw background
+        painter.setBrush(QColor("#F5A9A9"))
+        painter.setPen(Qt.NoPen)
+        painter.drawRoundedRect(self.rect(), 10, 10)
+
+        # Draw border
+        painter.setBrush(Qt.NoBrush)
+        painter.setPen(QPen(QColor("black"), 2))
+        painter.drawRoundedRect(self.rect(), 10, 10)
+
+        super().paintEvent(event)
 
 class NameplateLabelHeader(QLabel):
     def __init__(self, text="",parent=None):
@@ -65,14 +81,6 @@ class MyWindow(QMainWindow):
             }
             QPushButton:hover {
                 background-color: #DDDDDD;
-            }
-            QLabel {
-                background-color: #EFEFEF;
-                border: 1px solid #CCCCCC;
-                border-radius: 5px;
-                padding: 3px;
-                margin: 3px;
-                color: black;
             }
         ''')
 
