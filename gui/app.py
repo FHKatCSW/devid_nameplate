@@ -223,7 +223,25 @@ class MyWindow(QMainWindow):
         # ------------------
 
         self.control_grid_act_idev = QGridLayout()
-        self.control_grid_act_idev.setSpacing(5)
+        self.control_grid_act_idev.setSpacing(3)
+
+        self.actual_idev_nameplate = QLabel('Nameplate')
+        idev_nameplate_font = self.actual_idev_nameplate .font()
+        idev_nameplate_font.setBold(True)
+        self.actual_idev_nameplate.setFont(idev_nameplate_font)
+        self.actual_idev_nameplate.setFixedSize(150,40)
+        self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 1)
+
+
+        self.button_reload_idev = QPushButton()
+        icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
+        self.button_reload_idev.setIcon(icon)
+        self.button_reload_idev.setIconSize(QSize(32, 32))
+        self.button_reload_idev.setFixedSize(50, 50)
+        self.control_grid_act_idev.addWidget(self.button_reload_idev, 1, 1)
+
+
+        self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
 
         # Producer / Organization
         self.actual_idev_producer = QLabel(self)
@@ -234,8 +252,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_producer_label = QLabel('Producer:')
         self.actual_idev_producer_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,0, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 0, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
 
         # Produced
         self.actual_idev_produced = QLabel(self)
@@ -246,8 +264,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_produced_label = QLabel('Produced:')
         self.actual_idev_produced_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,1, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 1, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 2)
 
         # Pseudonym
         self.actual_idev_pseudonym = QLabel(self)
@@ -258,8 +276,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_pseudonym_label = QLabel('Product:')
         self.actual_idev_pseudonym_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,2, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 2, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,3, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 2)
 
         # Serial Number
         self.actual_idev_serial = QLabel(self)
@@ -270,8 +288,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_serial_label = QLabel('Serial No.:')
         self.actual_idev_serial_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_serial_label,3, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_serial, 3, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial_label, 4, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial, 4, 2)
 
         # Country
         self.actual_idev_country = QLabel(self)
@@ -282,18 +300,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_country_label = QLabel('Country:')
         self.actual_idev_country_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 4, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_country, 4, 2)
-
-        self.button_reload_idev = QPushButton()
-        icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
-        self.button_reload_idev.setIcon(icon)
-        self.button_reload_idev.setIconSize(QSize(32, 32))
-        self.button_reload_idev.setFixedSize(50, 50)
-        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 0)
-
-
-        self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
+        self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 5, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_country, 5, 2)
 
         self.tab_actual_idev = QWidget()
         self.tabs.addTab(self.tab_actual_idev, 'IDevID')
