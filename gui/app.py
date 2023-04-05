@@ -1,5 +1,6 @@
 import json
 import sys
+import os
 
 from PyQt5.QtCore import Qt, QTimer, QSize
 from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen
@@ -10,6 +11,8 @@ from PyQt5.QtGui import QIcon
 from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
+
+os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=False'
 
 class NameplateLabel(QLabel):
     def __init__(self, parent=None):
