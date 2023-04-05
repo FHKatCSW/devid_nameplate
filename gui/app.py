@@ -227,7 +227,7 @@ class MyWindow(QMainWindow):
 
         self.result_actual_idev = QLabel(self)
         self.result_actual_idev.setFixedSize(350,250)
-        self.result_actual_idev.move(80, 80)
+        self.result_actual_idev.move(30, 30)
         self.result_actual_idev.setWordWrap(True)
 
         self.control_grid_act_idev.addWidget(self.result_actual_idev, 0, 1, 1, 1)
