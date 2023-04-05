@@ -38,21 +38,15 @@ class StatusIndicator(QLabel):
         super().__init__(parent)
         self.setFixedSize(20, 20)
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
-
-        # Draw background
-        painter.setBrush(QColor("#d9d9d9"))
-        painter.setPen(Qt.NoPen)
-        painter.drawRoundedRect(self.rect(), 10, 10)
-
-        # Draw border
-        painter.setBrush(Qt.NoBrush)
-        painter.setPen(QPen(QColor("black"), 3))
-        painter.drawRoundedRect(self.rect(), 10, 10)
-
-        super().paintEvent(event)
+        self.setStyleSheet("""
+                   StatusIndicator {
+                       background-color: #d9d9d9;
+                       border-radius: 10px;
+                       border: 2px solid black;
+                       color: white;
+                       font-weight: bold;
+                   }
+               """)
 
 
 class NameplateLabelHeader(QLabel):
