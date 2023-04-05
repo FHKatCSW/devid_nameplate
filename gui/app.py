@@ -41,10 +41,6 @@ class StatusIndicator(QLabel):
         self.setStyleSheet("""
                    StatusIndicator {
                        background-color: #d9d9d9;
-                       border-radius: 10px;
-                       border: 2px solid black;
-                       color: white;
-                       font-weight: bold;
                    }
                """)
 
