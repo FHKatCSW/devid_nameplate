@@ -222,9 +222,6 @@ class MyWindow(QMainWindow):
         # Tab for the IDevID
         # ------------------
 
-        self.tab2 = QWidget()
-        self.tabs.addTab(self.tab2, 'IDevID')
-
         self.control_grid_act_idev = QGridLayout()
         self.control_grid_act_idev.setSpacing(5)
 
@@ -241,13 +238,13 @@ class MyWindow(QMainWindow):
         self.button_reload_idev.setIconSize(self.button_reload_idev.size())
         self.button_reload_idev.setFixedSize(50, 50)
         self.button_reload_idev.move(75, 75)
-        self.control_grid_act_idev.addWidget(self.button_bootstrap_ldev, 0, 0)
+        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 0)
 
 
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
 
         self.tab_actual_idev = QWidget()
-        self.tabs.addTab(self.tab_actual_idev, 'IDev')
+        self.tabs.addTab(self.tab_actual_idev, 'IDevID')
         self.tab_actual_idev.setLayout(self.control_grid_act_idev)
 
         # ------------------
