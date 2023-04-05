@@ -233,7 +233,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.addWidget(self.result_actual_idev, 0, 1, 1, 1)
 
         self.button_reload_idev = QPushButton()
-        icon = QIcon("./icons/rotate-right-solid.svg")  # Load the icon from a file path
+        icon = QIcon("./icons/rotate-icon.png")  # Load the icon from a file path
         self.button_reload_idev.setIcon(icon)
         self.button_reload_idev.setIconSize(self.button_reload_idev.size())
         self.button_reload_idev.setFixedSize(50, 50)
