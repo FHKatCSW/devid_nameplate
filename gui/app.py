@@ -2,7 +2,7 @@ import json
 import sys
 
 from PyQt5.QtCore import Qt, QTimer, QSize
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget
 from PyQt5.QtGui import QIcon
@@ -11,6 +11,16 @@ from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
 
+class NameplateLabel(QLabel):
+    def __init__(self, text, parent=None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setFixedSize(300,250)
+        self.move(30, 30)
+        self.setWordWrap(True)
+        font = QFont()
+        font.setPointSize(8)
+        self.setFont(font)
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -256,10 +266,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 1)
 
         # Produced
-        self.actual_idev_produced = QLabel(self)
-        self.actual_idev_produced.setFixedSize(200,40)
-        self.actual_idev_produced.move(15, 15)
-        self.actual_idev_produced.setWordWrap(True)
+        self.actual_idev_produced = NameplateLabel(self)
 
         self.actual_idev_produced_label = QLabel('Produced:')
         self.actual_idev_produced_label.setFixedSize(150,40)
