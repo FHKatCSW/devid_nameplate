@@ -264,13 +264,8 @@ class MyWindow(QMainWindow):
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
 
         # Producer / Organization
-        self.actual_idev_producer = QLabel(self)
-        self.actual_idev_producer.setFixedSize(200,40)
-        self.actual_idev_producer.move(15, 15)
-        self.actual_idev_producer.setWordWrap(True)
-
-        self.actual_idev_producer_label = QLabel('Producer:')
-        self.actual_idev_producer_label.setFixedSize(150,40)
+        self.actual_idev_producer = NameplateLabel(self)
+        self.actual_idev_producer_label = NameplateLabelHeader('Producer:')
 
         self.control_grid_act_idev.addWidget(self.actual_idev_producer_label, 1, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 1)
@@ -284,27 +279,21 @@ class MyWindow(QMainWindow):
 
         # Pseudonym
         self.actual_idev_pseudonym = NameplateLabel(self)
-
-        self.actual_idev_pseudonym_label = QLabel('Product:')
-        self.actual_idev_pseudonym_label.setFixedSize(150,40)
+        self.actual_idev_pseudonym_label = NameplateLabelHeader('Product:')
 
         self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,3, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 1)
 
         # Serial Number
         self.actual_idev_serial = NameplateLabel(self)
-
-        self.actual_idev_serial_label = QLabel('Serial No.:')
-        self.actual_idev_serial_label.setFixedSize(150,40)
+        self.actual_idev_serial_label = NameplateLabelHeader('Serial No.:')
 
         self.control_grid_act_idev.addWidget(self.actual_idev_serial_label, 4, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_serial, 4, 1)
 
         # Country
         self.actual_idev_country = NameplateLabel(self)
-
-        self.actual_idev_country_label = QLabel('Country:')
-        self.actual_idev_country_label.setFixedSize(150,40)
+        self.actual_idev_country_label = NameplateLabelHeader('Country:')
 
         self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 5, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_country, 5, 1)
