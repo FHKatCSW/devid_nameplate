@@ -128,7 +128,7 @@ class MyWindow(QMainWindow):
         self.control_grid_idev.setSpacing(5)
 
         self.result_label_idev = QLabel(self)
-        self.result_label_idev.setFixedSize(200,200)
+        self.result_label_idev.setFixedSize(300,200)
         self.result_label_idev.move(80, 80)
         self.result_label_idev.setWordWrap(True)
 
