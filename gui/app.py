@@ -234,8 +234,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_producer_label = QLabel('Producer:')
         self.actual_idev_producer_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,0, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 0, 2)
 
         # Produced
         self.actual_idev_produced = QLabel(self)
@@ -246,8 +246,20 @@ class MyWindow(QMainWindow):
         self.actual_idev_produced_label = QLabel('Produced:')
         self.actual_idev_produced_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,1, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 1, 2)
+
+        # Pseudonym
+        self.actual_idev_pseudonym = QLabel(self)
+        self.actual_idev_pseudonym.setFixedSize(200,40)
+        self.actual_idev_pseudonym.move(15, 15)
+        self.actual_idev_pseudonym.setWordWrap(True)
+
+        self.actual_idev_pseudonym_label = QLabel('Product:')
+        self.actual_idev_pseudonym_label.setFixedSize(150,40)
+
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,2, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 2, 2)
 
         # Serial Number
         self.actual_idev_serial = QLabel(self)
@@ -260,6 +272,18 @@ class MyWindow(QMainWindow):
 
         self.control_grid_act_idev.addWidget(self.actual_idev_serial_label,3, 1)
         self.control_grid_act_idev.addWidget(self.actual_idev_serial, 3, 2)
+
+        # Country
+        self.actual_idev_country = QLabel(self)
+        self.actual_idev_country.setFixedSize(200,40)
+        self.actual_idev_country.move(15, 15)
+        self.actual_idev_country.setWordWrap(True)
+
+        self.actual_idev_country_label = QLabel('Country:')
+        self.actual_idev_country_label.setFixedSize(150,40)
+
+        self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 4, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_country, 4, 2)
 
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
@@ -372,6 +396,11 @@ class MyWindow(QMainWindow):
         response = idevapi.provide()
         self.results_idev_cycle.append(json.dumps(response["data"]))
         self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
+        self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
+        self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
+        self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
+        self.actual_idev_pseudonym.setText(json.dumps(response["data"]["pseudonym"]))
+
 
     def load_actual_ldev(self):
         ldevapi = HighlevelLdev()
