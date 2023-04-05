@@ -26,11 +26,6 @@ class NameplateLabel(QLabel):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
 
-        # Draw background
-        painter.setBrush(QColor("#F5A9A9"))
-        painter.setPen(Qt.NoPen)
-        painter.drawRoundedRect(self.rect(), 10, 10)
-
         # Draw border
         painter.setBrush(Qt.NoBrush)
         painter.setPen(QPen(QColor("black"), 2))
