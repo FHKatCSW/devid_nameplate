@@ -128,18 +128,19 @@ class MyWindow(QMainWindow):
         self.control_grid_idev.setSpacing(5)
 
         self.result_label_idev = QLabel(self)
+        self.result_label_idev.setFixedSize(400,400)
         self.result_label_idev.move(80, 80)
         self.result_label_idev.setWordWrap(True)
 
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
         # Create buttons for first tab
-        self.button_bootstrap_idev = QPushButton('Bootstrap IDev')
-        self.button_delete_idev = QPushButton('Delete IDev')
-        self.button_validate_idev = QPushButton('Validate IDev')
-        self.button_bootstrap_idev.setFixedSize(100,20)
-        self.button_delete_idev.setFixedSize(100,20)
-        self.button_validate_idev.setFixedSize(100,20)
+        self.button_bootstrap_idev = QPushButton('Bootstrap\nIDev')
+        self.button_delete_idev = QPushButton('Delete\nIDev')
+        self.button_validate_idev = QPushButton('Validate\nIDev')
+        self.button_bootstrap_idev.setFixedSize(100,40)
+        self.button_delete_idev.setFixedSize(100,40)
+        self.button_validate_idev.setFixedSize(100,40)
         self.control_grid_idev.addWidget(self.button_bootstrap_idev, 0, 0)
         self.control_grid_idev.addWidget(self.button_delete_idev, 1, 0)
         self.control_grid_idev.addWidget(self.button_validate_idev, 2, 0)
