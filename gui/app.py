@@ -18,7 +18,7 @@ class NameplateLabel(QLabel):
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
-        font.setPointSize(7)
+        font.setPointSize(3)
         self.setFont(font)
 
 class NameplateLabelHeader(QLabel):
