@@ -225,6 +225,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev = QGridLayout()
         self.control_grid_act_idev.setSpacing(5)
 
+        # Producer / Organization
         self.actual_idev_producer = QLabel(self)
         self.actual_idev_producer.setFixedSize(200,40)
         self.actual_idev_producer.move(15, 15)
@@ -235,6 +236,30 @@ class MyWindow(QMainWindow):
 
         self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
         self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
+
+        # Produced
+        self.actual_idev_produced = QLabel(self)
+        self.actual_idev_produced.setFixedSize(200,40)
+        self.actual_idev_produced.move(15, 15)
+        self.actual_idev_produced.setWordWrap(True)
+
+        self.actual_idev_produced_label = QLabel('Produced:')
+        self.actual_idev_produced_label.setFixedSize(150,40)
+
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 2)
+
+        # Serial Number
+        self.actual_idev_serial = QLabel(self)
+        self.actual_idev_serial.setFixedSize(200,40)
+        self.actual_idev_serial.move(15, 15)
+        self.actual_idev_serial.setWordWrap(True)
+
+        self.actual_idev_serial_label = QLabel('Serial No.:')
+        self.actual_idev_serial_label.setFixedSize(150,40)
+
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial_label,3, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial, 3, 2)
 
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
@@ -345,8 +370,8 @@ class MyWindow(QMainWindow):
     def load_actual_idev(self):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["data"]["o"]))
-        self.actual_idev_producer.setText(json.dumps(self.results_idev_cycle[-1]))
+        self.results_idev_cycle.append(json.dumps(response["data"]))
+        self.actual_idev_producer.setText(json.dumps(self.results_idev_cycle[-1]["o"]))
 
     def load_actual_ldev(self):
         ldevapi = HighlevelLdev()
