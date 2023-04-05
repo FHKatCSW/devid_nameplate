@@ -38,6 +38,28 @@ class NameplateLabel(QLabel):
 
         super().paintEvent(event)
 
+class StatusIndicator(QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setFixedSize(20, 20)
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        # Draw background
+        painter.setBrush(QColor("#d9d9d9"))
+        painter.setPen(Qt.NoPen)
+        painter.drawRoundedRect(self.rect(), 10, 10)
+
+        # Draw border
+        painter.setBrush(Qt.NoBrush)
+        painter.setPen(QPen(QColor("black"), 3))
+        painter.drawRoundedRect(self.rect(), 10, 10)
+
+        super().paintEvent(event)
+
+
 class NameplateLabelHeader(QLabel):
     def __init__(self, text="",parent=None):
         super().__init__(parent)
@@ -187,16 +209,13 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_provision_idev = QLabel()
-        self.led_provision_idev.setFixedSize(20, 20)
+        self.led_provision_idev = StatusIndicator()
         self.control_grid_idev.addWidget(self.led_provision_idev, 0, 1)
         # Button 2
-        self.led_delete_idev = QLabel()
-        self.led_delete_idev.setFixedSize(20, 20)
+        self.led_delete_idev = StatusIndicator()
         self.control_grid_idev.addWidget(self.led_delete_idev, 1, 1)
         # Button 3
-        self.led_validate_idev = QLabel()
-        self.led_validate_idev.setFixedSize(20, 20)
+        self.led_validate_idev = StatusIndicator()
         self.control_grid_idev.addWidget(self.led_validate_idev, 2, 1)
 
         # Connect buttons to API calls and update labels
@@ -236,16 +255,13 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_provision_ldev = QLabel()
-        self.led_provision_ldev.setFixedSize(20, 20)
+        self.led_provision_ldev = StatusIndicator()
         self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 1)
         # Button 2
-        self.led_delete_ldev = QLabel()
-        self.led_delete_ldev.setFixedSize(20, 20)
+        self.led_delete_ldev = StatusIndicator()
         self.control_grid_ldev.addWidget(self.led_delete_ldev, 1, 1)
         # Button 3
-        self.led_validate_ldev = QLabel()
-        self.led_validate_ldev.setFixedSize(20, 20)
+        self.led_validate_ldev = StatusIndicator()
         self.control_grid_ldev.addWidget(self.led_validate_ldev, 2, 1)
 
         # Connect buttons to API calls and update labels
@@ -341,7 +357,7 @@ class MyWindow(QMainWindow):
         self.button_reload_ldev.clicked.connect(lambda: self.load_actual_ldev())
 
         self.tab_actual_ldev = QWidget()
-        self.tabs.addTab(self.tab_actual_ldev, 'IDevID')
+        self.tabs.addTab(self.tab_actual_ldev, 'LDevID')
         self.tab_actual_ldev.setLayout(self.control_grid_act_ldev)
 
     def delete_idev(self):
