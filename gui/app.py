@@ -12,10 +12,10 @@ from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
 
 class NameplateLabel(QLabel):
-    def __init__(self, text, parent=None):
+    def __init__(self, text="", parent=None):
         super().__init__(parent)
         self.setText(text)
-        self.setFixedSize(300,250)
+        self.setFixedSize(300, 250)
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
