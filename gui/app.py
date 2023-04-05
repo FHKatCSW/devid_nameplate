@@ -346,7 +346,7 @@ class MyWindow(QMainWindow):
     def load_actual_idev(self):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["message"]))
+        self.results_idev_cycle.append(json.dumps(response["data"]["issuer"]))
         self.result_actual_idev.setText(json.dumps(self.results_idev_cycle[-1]))
 
 
