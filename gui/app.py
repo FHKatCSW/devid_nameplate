@@ -435,7 +435,7 @@ class MyWindow(QMainWindow):
     def load_actual_ldev(self):
         ldevapi = HighlevelLdev()
         response = ldevapi.provide()
-        self.results_ldev_cycle.append(json.dumps(response["data"]["issuer"]))
+        self.results_ldev_cycle.append(json.dumps(response["data"]))
         self.result_actual_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
 
 
