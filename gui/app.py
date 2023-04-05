@@ -134,11 +134,14 @@ class MyWindow(QMainWindow):
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
         # Create buttons for first tab
-        self.button_delete_idev = QPushButton('Delete LDev')
-        self.button_provision_idev = QPushButton('Provision LDev')
-        self.button_validate_idev = QPushButton('Validate LDev')
-        self.control_grid_idev.addWidget(self.button_delete_idev, 0, 0)
-        self.control_grid_idev.addWidget(self.button_provision_idev, 1, 0)
+        self.button_bootstrap_idev = QPushButton('Bootstrap IDev')
+        self.button_delete_idev = QPushButton('Delete IDev')
+        self.button_validate_idev = QPushButton('Validate IDev')
+        self.button_bootstrap_idev.setFixedSize(100,20)
+        self.button_delete_idev.setFixedSize(100,20)
+        self.button_validate_idev.setFixedSize(100,20)
+        self.control_grid_idev.addWidget(self.button_bootstrap_idev, 0, 0)
+        self.control_grid_idev.addWidget(self.button_delete_idev, 1, 0)
         self.control_grid_idev.addWidget(self.button_validate_idev, 2, 0)
 
         # Create LED label and add to grid
@@ -157,7 +160,7 @@ class MyWindow(QMainWindow):
 
         # Connect buttons to API calls and update labels
         self.button_delete_idev.clicked.connect(lambda: self.delete_idev())
-        self.button_provision_idev.clicked.connect(lambda: self.provision_idev())
+        self.button_bootstrap_idev.clicked.connect(lambda: self.provision_idev())
         self.button_validate_idev.clicked.connect(lambda: self.validate_idev())
 
         self.tab_control_ldev = QWidget()
@@ -179,11 +182,11 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 2, 3, 2)
 
         # Create buttons for first tab
+        self.button_bootstrap_ldev = QPushButton('Bootstrap LDev')
         self.button_delete_ldev = QPushButton('Delete LDev')
-        self.button_provision_ldev = QPushButton('Provision LDev')
         self.button_validate_ldev = QPushButton('Validate LDev')
-        self.control_grid_ldev.addWidget(self.button_delete_ldev, 0, 0)
-        self.control_grid_ldev.addWidget(self.button_provision_ldev, 1, 0)
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev, 0, 0)
+        self.control_grid_ldev.addWidget(self.button_delete_ldev, 1, 0)
         self.control_grid_ldev.addWidget(self.button_validate_ldev, 2, 0)
 
         # Create LED label and add to grid
@@ -202,7 +205,7 @@ class MyWindow(QMainWindow):
 
         # Connect buttons to API calls and update labels
         self.button_delete_ldev.clicked.connect(lambda: self.delete_ldev())
-        self.button_provision_ldev.clicked.connect(lambda: self.provision_ldev())
+        self.button_bootstrap_ldev.clicked.connect(lambda: self.provision_ldev())
         self.button_validate_ldev.clicked.connect(lambda: self.validate_ldev())
 
         self.tab_control_ldev = QWidget()
