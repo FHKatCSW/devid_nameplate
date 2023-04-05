@@ -230,7 +230,7 @@ class MyWindow(QMainWindow):
         idev_nameplate_font.setBold(True)
         self.actual_idev_nameplate.setFont(idev_nameplate_font)
         self.actual_idev_nameplate.setFixedSize(150,40)
-        self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 1)
+        self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 0)
 
 
         self.button_reload_idev = QPushButton()
@@ -252,8 +252,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_producer_label = QLabel('Producer:')
         self.actual_idev_producer_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label,1, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer_label, 1, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_producer, 1, 1)
 
         # Produced
         self.actual_idev_produced = QLabel(self)
@@ -264,8 +264,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_produced_label = QLabel('Produced:')
         self.actual_idev_produced_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 1)
 
         # Pseudonym
         self.actual_idev_pseudonym = QLabel(self)
@@ -276,8 +276,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_pseudonym_label = QLabel('Product:')
         self.actual_idev_pseudonym_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,3, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,3, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 1)
 
         # Serial Number
         self.actual_idev_serial = QLabel(self)
@@ -288,8 +288,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_serial_label = QLabel('Serial No.:')
         self.actual_idev_serial_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_serial_label, 4, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_serial, 4, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial_label, 4, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_serial, 4, 1)
 
         # Country
         self.actual_idev_country = QLabel(self)
@@ -300,8 +300,8 @@ class MyWindow(QMainWindow):
         self.actual_idev_country_label = QLabel('Country:')
         self.actual_idev_country_label.setFixedSize(150,40)
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 5, 1)
-        self.control_grid_act_idev.addWidget(self.actual_idev_country, 5, 2)
+        self.control_grid_act_idev.addWidget(self.actual_idev_country_label, 5, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_country, 5, 1)
 
         self.tab_actual_idev = QWidget()
         self.tabs.addTab(self.tab_actual_idev, 'IDevID')
