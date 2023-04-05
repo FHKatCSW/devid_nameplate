@@ -237,8 +237,8 @@ class MyWindow(QMainWindow):
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
         self.button_reload_idev.setIcon(icon)
         self.button_reload_idev.setIconSize(QSize(32, 32))
-        self.button_reload_idev.setFixedSize(50, 50)
-        self.control_grid_act_idev.addWidget(self.button_reload_idev, 1, 1)
+        self.button_reload_idev.setFixedSize(40, 40)
+        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 1)
 
 
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
