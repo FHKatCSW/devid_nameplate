@@ -347,7 +347,7 @@ class MyWindow(QMainWindow):
         idevapi = HighlevelIdev()
         response = idevapi.provide()
         self.results_idev_cycle.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_idev_cycle[-1]))
+        self.result_actual_idev.setText(json.dumps(self.results_idev_cycle[-1]))
 
 
 if __name__ == '__main__':
