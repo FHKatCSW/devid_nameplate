@@ -294,7 +294,7 @@ class MyWindow(QMainWindow):
         self.result_label_ldev.move(80, 80)
         self.result_label_ldev.setWordWrap(True)
 
-        self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 3, 4, 3)
+        self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 4, 5, 4)
 
         # Create buttons for first tab
         self.icon_bootstrap_ldev_azure = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/azure.png")
