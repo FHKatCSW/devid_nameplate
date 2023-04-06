@@ -484,6 +484,7 @@ class MyWindow(QMainWindow):
                 self.actual_idev_producer.setText("No IDevID set")
             else:
                 self.logger.info(type(response["data"]))
+                self.logger.info(response["data"]["serial_number"])
                 self.result_actual_ldev.setText(json.dumps(response["data"]["cert_str"]))
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
