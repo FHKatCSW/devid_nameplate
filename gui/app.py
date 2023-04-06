@@ -327,7 +327,7 @@ class MyWindow(QMainWindow):
         self.button_reload_idev.setIcon(icon)
         self.button_reload_idev.setIconSize(QSize(32, 32))
         self.button_reload_idev.setFixedSize(40, 40)
-        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 1)
+        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 2)
 
 
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
