@@ -457,8 +457,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_validate_ldev.setStyleSheet("background-color: red")
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
-
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def load_actual_idev(self):
         idevapi = HighlevelIdev()
@@ -467,13 +466,12 @@ class MyWindow(QMainWindow):
         if response["data"] is None:
             self.actual_idev_producer.setText("No IDevID set")
         else:
-            self.logger.info(type(response["data"]["o"]))
-            self.logger.info(repr(json.dumps(response["data"]["o"]))[2:-2])
-            self.actual_idev_producer.setText(repr(json.dumps(response["data"]["o"]))[1:-1])
-            self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
-            self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
-            self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
-            self.actual_idev_pseudonym.setText(json.dumps(response["data"]["pseudonym"]))
+            self.actual_idev_producer.setText(repr(json.dumps(response["data"]["o"]))[2:-2])
+            self.actual_idev_serial.setText(repr(json.dumps(response["data"]["serial_number"]))[2:-2])
+            self.actual_idev_produced.setText(repr(json.dumps(response["data"]["validFrom"]))[2:-2])
+            self.actual_idev_country.setText(repr(json.dumps(response["data"]["c"]))[2:-2])
+            self.actual_idev_pseudonym.setText(repr(json.dumps(response["data"]["pseudonym"]))[2:-2])
+
 
 
     def load_actual_ldev(self):
@@ -485,9 +483,8 @@ class MyWindow(QMainWindow):
             if response["data"] is None:
                 self.actual_idev_producer.setText("No IDevID set")
             else:
-                self.logger.info(type(response["data"]))
-                self.logger.info(response["data"]["cert_str"])
                 self.result_actual_ldev.setText(json.dumps(response["data"]["cert_str"]))
+                self.result_actual_ldev.setText(repr(json.dumps(response["data"]["cert_str"]))[2:-2])
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
 
