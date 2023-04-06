@@ -59,9 +59,8 @@ class NameplateLabelHeader(QLabel):
         self.setFont(font)
 
 class CertOutput(QLabel):
-    def __init__(self, text="",parent=None):
+    def __init__(self,parent=None):
         super().__init__(parent)
-        self.setText(text)
         self.setFixedSize(350, 250)
         self.move(15, 15)
         font = QFont()
