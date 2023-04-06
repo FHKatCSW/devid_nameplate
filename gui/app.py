@@ -101,6 +101,16 @@ class QTextEditHandler(logging.Handler):
         msg = self.format(record)
         self.widget.append(msg)
 
+
+class BootstrapButton(QPushButton):
+    def __init__(self, text, icon_path, parent=None):
+        super().__init__(text, parent)
+
+        icon = QIcon(icon_path)
+        self.setIcon(icon)
+        self.setIconSize(icon.actualSize(QSize(64, 64)))
+        self.setFixedSize(40, 40)
+
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -281,15 +291,22 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 2, 3, 2)
 
         # Create buttons for first tab
+        self.label_ldev_bootstrap = NameplateLabelHeader('Bootstrap')
+
+        self.control_grid_ldev.addWidget(self.label_ldev_bootstrap, 0, 0)
+        self.button_bootstrap_ldev_azure = BootstrapButton(icon_path="/home/admin/devid_nameplate/icons/azure.png")
         self.button_bootstrap_ldev = QPushButton('Bootstrap\nLDev')
         self.button_delete_ldev = QPushButton('Delete\nLDev')
         self.button_validate_ldev = QPushButton('Validate\nLDev')
         self.button_bootstrap_ldev.setFixedSize(100,40)
         self.button_delete_ldev.setFixedSize(100,40)
         self.button_validate_ldev.setFixedSize(100,40)
-        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev, 0, 0)
-        self.control_grid_ldev.addWidget(self.button_delete_ldev, 1, 0)
-        self.control_grid_ldev.addWidget(self.button_validate_ldev, 2, 0)
+
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_azure, 1, 0)
+
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev, 2, 0)
+        self.control_grid_ldev.addWidget(self.button_delete_ldev, 3, 0)
+        self.control_grid_ldev.addWidget(self.button_validate_ldev, 4, 0)
 
         # Create LED label and add to grid
         # Button 1
