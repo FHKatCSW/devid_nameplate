@@ -155,6 +155,10 @@ class MyWindow(QMainWindow):
         max_width = int(screen_size.width() * 1)  # Use 90% of the screen width
         max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
 
+        # ------------------
+        # Tab for Status
+        # ------------------
+
         self.log_grid = QGridLayout()
 
         # Create a QTextEdit widget to display log messages
@@ -173,7 +177,7 @@ class MyWindow(QMainWindow):
 
         self.tab_logs = QWidget()
         self.tabs.addTab(self.tab_logs, 'Logs')
-        self.log_grid.setLayout(self.tab_logs)
+        self.tab_logs.setLayout(self.log_grid)
 
         # ------------------
         # Tab for Status
