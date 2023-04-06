@@ -294,7 +294,7 @@ class MyWindow(QMainWindow):
         self.result_label_ldev.move(80, 80)
         self.result_label_ldev.setWordWrap(True)
 
-        self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 2, 3, 2)
+        self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 3, 4, 3)
 
         # Create buttons for first tab
         self.icon_bootstrap_ldev_azure = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/azure.png")
@@ -325,7 +325,7 @@ class MyWindow(QMainWindow):
         # Create LED label and add to grid
         # Button 1
         self.led_provision_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 1)
+        self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 3)
         # Button 2
         self.led_delete_ldev = StatusIndicator()
         self.control_grid_ldev.addWidget(self.led_delete_ldev, 3, 1)
