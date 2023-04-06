@@ -443,7 +443,13 @@ class MyWindow(QMainWindow):
         ldevapi = HighlevelLdev()
         response = ldevapi.provide()
         self.results_ldev_cycle.append(json.dumps(response["data"]))
-        self.result_actual_ldev.setText(json.dumps(json.dumps(response["data"]["cert_string"])))
+        try:
+            if response["data"] is None:
+                self.actual_idev_producer.setText("No IDevID set")
+            else:
+                self.result_actual_ldev.setText(json.dumps(response["data"]["cert_string"]))
+        except Exception as err:
+            self.result_actual_ldev.setText(str(err))
 
 
 if __name__ == '__main__':
