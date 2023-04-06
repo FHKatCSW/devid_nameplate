@@ -485,6 +485,7 @@ class MyWindow(QMainWindow):
             else:
                 orig_cert_string = repr(json.dumps(response["data"]["cert_str"]))[5:-5]
                 new_cert_string = orig_cert_string.replace('\\\\n', '\n')
+                new_cert_string = new_cert_string.replace('\\', '')
                 self.result_actual_ldev.setText(new_cert_string)
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
