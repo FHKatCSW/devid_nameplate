@@ -104,7 +104,7 @@ class QTextEditHandler(logging.Handler):
 
 
 class IconWithSize(QLabel):
-    def __init__(self, icon_path, width=40, height=40):
+    def __init__(self, icon_path, width=80, height=40):
         super().__init__()
 
         # Load the icon from the file path
@@ -307,8 +307,8 @@ class MyWindow(QMainWindow):
 
         self.button_delete_ldev = QPushButton('Delete\nLDev')
         self.button_validate_ldev = QPushButton('Validate\nLDev')
-        self.button_delete_ldev.setFixedSize(100,40)
-        self.button_validate_ldev.setFixedSize(100,40)
+        self.button_delete_ldev.setFixedSize(80,40)
+        self.button_validate_ldev.setFixedSize(80,40)
 
         self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_azure, 0, 0)
         self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_aws, 1, 0)
@@ -328,14 +328,17 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 1)
         # Button 2
         self.led_delete_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_delete_ldev, 4, 1)
+        self.control_grid_ldev.addWidget(self.led_delete_ldev, 3, 1)
         # Button 3
         self.led_validate_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_validate_ldev, 5, 1)
+        self.control_grid_ldev.addWidget(self.led_validate_ldev, 4, 1)
 
         # Connect buttons to API calls and update labels
         self.button_delete_ldev.clicked.connect(lambda: self.delete_ldev())
         self.button_bootstrap_ldev_azure.clicked.connect(lambda: self.provision_ldev())
+        self.button_bootstrap_ldev_aws.clicked.connect(lambda: self.provision_ldev())
+        self.button_bootstrap_ldev_opc.clicked.connect(lambda: self.provision_ldev())
+
         self.button_validate_ldev.clicked.connect(lambda: self.validate_ldev())
 
         self.tab_control_ldev = QWidget()
