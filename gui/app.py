@@ -103,8 +103,8 @@ class QTextEditHandler(logging.Handler):
 
 
 class BootstrapButton(QPushButton):
-    def __init__(self, text, icon_path, parent=None):
-        super().__init__(text, parent)
+    def __init__(self, icon_path, parent=None):
+        super().__init__(parent)
 
         icon = QIcon(icon_path)
         self.setIcon(icon)
