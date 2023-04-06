@@ -3,7 +3,7 @@ import sys
 import os
 
 from PyQt5.QtCore import Qt, QTimer, QSize
-from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen
+from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget, QTextEdit
 from PyQt5.QtGui import QIcon
@@ -102,14 +102,20 @@ class QTextEditHandler(logging.Handler):
         self.widget.append(msg)
 
 
-class BootstrapButton(QPushButton):
-    def __init__(self, icon_path, parent=None):
-        super().__init__(parent)
 
-        icon = QIcon(icon_path)
-        self.setIcon(icon)
-        self.setIconSize(icon.actualSize(QSize(64, 64)))
-        self.setFixedSize(40, 40)
+class IconWithSize(QLabel):
+    def __init__(self, icon_path, width=40, height=40):
+        super().__init__()
+
+        # Load the icon from the file path
+        pixmap = QPixmap(icon_path)
+        icon_size = QSize(width, height)
+
+        scaled_pixmap = pixmap.scaled(icon_size)
+
+        # Set the pixmap of the label
+        self.setPixmap(scaled_pixmap)
+
 
 class MyWindow(QMainWindow):
     def __init__(self):
@@ -291,20 +297,28 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 2, 3, 2)
 
         # Create buttons for first tab
-        self.label_ldev_bootstrap = NameplateLabelHeader('Bootstrap')
+        self.icon_bootstrap_ldev_azure = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/azure.png")
+        self.icon_bootstrap_ldev_aws = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/aws.png")
+        self.icon_bootstrap_ldev_opc = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/opc.png")
 
-        self.control_grid_ldev.addWidget(self.label_ldev_bootstrap, 0, 0)
-        self.button_bootstrap_ldev_azure = BootstrapButton(icon_path="/home/admin/devid_nameplate/icons/azure.png")
-        self.button_bootstrap_ldev = QPushButton('Bootstrap\nLDev')
+        self.button_bootstrap_ldev_azure = QPushButton('Bootstrap')
+        self.button_bootstrap_ldev_aws = QPushButton('Bootstrap')
+        self.button_bootstrap_ldev_opc = QPushButton('Bootstrap')
+
         self.button_delete_ldev = QPushButton('Delete\nLDev')
         self.button_validate_ldev = QPushButton('Validate\nLDev')
-        self.button_bootstrap_ldev.setFixedSize(100,40)
         self.button_delete_ldev.setFixedSize(100,40)
         self.button_validate_ldev.setFixedSize(100,40)
 
-        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_azure, 1, 0)
+        self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_azure, 0, 0)
+        self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_aws, 1, 0)
+        self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_opc, 2, 0)
 
-        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev, 2, 0)
+
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_azure, 0, 1)
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_aws, 1, 1)
+        self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_opc, 2, 1)
+
         self.control_grid_ldev.addWidget(self.button_delete_ldev, 3, 0)
         self.control_grid_ldev.addWidget(self.button_validate_ldev, 4, 0)
 
@@ -314,14 +328,14 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 1)
         # Button 2
         self.led_delete_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_delete_ldev, 1, 1)
+        self.control_grid_ldev.addWidget(self.led_delete_ldev, 4, 1)
         # Button 3
         self.led_validate_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_validate_ldev, 2, 1)
+        self.control_grid_ldev.addWidget(self.led_validate_ldev, 5, 1)
 
         # Connect buttons to API calls and update labels
         self.button_delete_ldev.clicked.connect(lambda: self.delete_ldev())
-        self.button_bootstrap_ldev.clicked.connect(lambda: self.provision_ldev())
+        self.button_bootstrap_ldev_azure.clicked.connect(lambda: self.provision_ldev())
         self.button_validate_ldev.clicked.connect(lambda: self.validate_ldev())
 
         self.tab_control_ldev = QWidget()
