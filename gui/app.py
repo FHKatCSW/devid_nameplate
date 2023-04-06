@@ -468,7 +468,7 @@ class MyWindow(QMainWindow):
             self.actual_idev_producer.setText("No IDevID set")
         else:
             self.logger.info(type(response["data"]["o"]))
-            self.logger.info(repr(json.dumps(response["data"]["o"]))[1:-1])
+            self.logger.info(repr(json.dumps(response["data"]["o"]))[2:-2])
             self.actual_idev_producer.setText(repr(json.dumps(response["data"]["o"]))[1:-1])
             self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
             self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
