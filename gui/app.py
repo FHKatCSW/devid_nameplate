@@ -63,6 +63,7 @@ class CertOutput(QLabel):
         super().__init__(parent)
         self.setFixedSize(350, 250)
         self.move(15, 15)
+        self.setWordWrap(True)
         font = QFont()
         font.setPointSize(7)
         self.setFont(font)
