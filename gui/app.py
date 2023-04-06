@@ -18,7 +18,7 @@ os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=False'
 class NameplateLabel(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setFixedSize(230, 40)
+        self.setFixedSize(250, 40)
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
@@ -53,7 +53,7 @@ class NameplateLabelHeader(QLabel):
     def __init__(self, text="",parent=None):
         super().__init__(parent)
         self.setText(text)
-        self.setFixedSize(180, 40)
+        self.setFixedSize(150, 40)
         self.move(15, 15)
         font = QFont()
         font.setPointSize(20)
@@ -319,7 +319,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.setSpacing(3)
 
         self.actual_idev_nameplate = NameplateHeader('Nameplate')
-        self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 1)
 
 
         self.button_reload_idev = QPushButton()
@@ -327,7 +327,7 @@ class MyWindow(QMainWindow):
         self.button_reload_idev.setIcon(icon)
         self.button_reload_idev.setIconSize(QSize(32, 32))
         self.button_reload_idev.setFixedSize(40, 40)
-        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 1)
+        self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 0)
 
 
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
