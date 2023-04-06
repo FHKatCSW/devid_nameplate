@@ -58,6 +58,16 @@ class NameplateLabelHeader(QLabel):
         font.setPointSize(20)
         self.setFont(font)
 
+class CertOutput(QLabel):
+    def __init__(self, text="",parent=None):
+        super().__init__(parent)
+        self.setText(text)
+        self.setFixedSize(350, 250)
+        self.move(15, 15)
+        font = QFont()
+        font.setPointSize(7)
+        self.setFont(font)
+
 class StatusLabel(QLabel):
     def __init__(self, text="",parent=None):
         super().__init__(parent)
@@ -77,6 +87,7 @@ class NameplateHeader(QLabel):
         self.move(30, 30)
         self.setWordWrap(True)
         font = QFont()
+        font.setBold(True)
         font.setPointSize(20)
         self.setFont(font)
 
@@ -332,10 +343,7 @@ class MyWindow(QMainWindow):
         self.control_grid_act_ldev = QGridLayout()
         self.control_grid_act_ldev.setSpacing(5)
 
-        self.result_actual_ldev = QLabel(self)
-        self.result_actual_ldev.setFixedSize(350,250)
-        self.result_actual_ldev.move(30, 30)
-        self.result_actual_ldev.setWordWrap(True)
+        self.result_actual_ldev = CertOutput(self)
 
         self.control_grid_act_ldev.addWidget(self.result_actual_ldev, 0, 1, 1, 1)
 
@@ -343,7 +351,7 @@ class MyWindow(QMainWindow):
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
         self.button_reload_ldev.setIcon(icon)
         self.button_reload_ldev.setIconSize(QSize(32, 32))
-        self.button_reload_ldev.setFixedSize(50, 50)
+        self.button_reload_ldev.setFixedSize(40, 40)
         self.control_grid_act_ldev.addWidget(self.button_reload_ldev, 0, 0)
 
 
@@ -425,7 +433,7 @@ class MyWindow(QMainWindow):
         if response["data"] is None:
             self.actual_idev_producer.setText("No IDevID set")
         else:
-            self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
+            self.actual_idev_producer.setText(json.loads(response["data"]["o"]))
             self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
             self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
             self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
@@ -436,7 +444,7 @@ class MyWindow(QMainWindow):
         ldevapi = HighlevelLdev()
         response = ldevapi.provide()
         self.results_ldev_cycle.append(json.dumps(response["data"]))
-        self.result_actual_ldev.setText(json.dumps(self.results_ldev_cycle[-1]))
+        self.result_actual_ldev.setText(json.dumps(json.dumps(response["data"]["cert_string"])))
 
 
 if __name__ == '__main__':
