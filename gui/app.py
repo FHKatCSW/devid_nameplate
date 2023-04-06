@@ -5,12 +5,13 @@ import os
 from PyQt5.QtCore import Qt, QTimer, QSize
 from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
-    QGridLayout, QDesktopWidget
+    QGridLayout, QDesktopWidget, QTextEdit
 from PyQt5.QtGui import QIcon
 
 from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
+import logging
 
 os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=False'
 
@@ -91,6 +92,15 @@ class NameplateHeader(QLabel):
         font.setPointSize(20)
         self.setFont(font)
 
+class QTextEditHandler(logging.Handler):
+    def __init__(self, widget):
+        logging.Handler.__init__(self)
+        self.widget = widget
+
+    def emit(self, record):
+        msg = self.format(record)
+        self.widget.append(msg)
+
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -144,6 +154,26 @@ class MyWindow(QMainWindow):
         # Set the maximum size of the label to fit on the screen
         max_width = int(screen_size.width() * 1)  # Use 90% of the screen width
         max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
+
+        self.log_grid = QGridLayout()
+
+        # Create a QTextEdit widget to display log messages
+        self.log_widget = QTextEdit()
+        self.log_grid.addWidget(self.log_widget)
+
+
+        # Create a logger and add the QTextEditHandler to it
+        self.logger = logging.getLogger()
+        self.logger.setLevel(logging.DEBUG)
+        handler = QTextEditHandler(self.log_widget)
+        handler.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+        self.logger.addHandler(handler)
+
+        self.tab_logs = QWidget()
+        self.tabs.addTab(self.tab_logs, 'Logs')
+        self.log_grid.setLayout(self.tab_logs)
 
         # ------------------
         # Tab for Status
@@ -441,6 +471,7 @@ class MyWindow(QMainWindow):
 
 
     def load_actual_ldev(self):
+        self.logger.info('Load actual LDevID')
         ldevapi = HighlevelLdev()
         response = ldevapi.provide()
         self.results_ldev_cycle.append(json.dumps(response["data"]))
