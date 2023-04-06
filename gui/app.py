@@ -324,8 +324,14 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_provision_ldev = StatusIndicator()
-        self.control_grid_ldev.addWidget(self.led_provision_ldev, 0, 3)
+        self.led_provision_ldev_azure = StatusIndicator()
+        self.control_grid_ldev.addWidget(self.led_provision_ldev_azure, 0, 3)
+
+        self.led_provision_ldev_aws = StatusIndicator()
+        self.control_grid_ldev.addWidget(self.led_provision_ldev_aws, 1, 3)
+
+        self.led_provision_ldev_opc = StatusIndicator()
+        self.control_grid_ldev.addWidget(self.led_provision_ldev_opc, 2, 3)
         # Button 2
         self.led_delete_ldev = StatusIndicator()
         self.control_grid_ldev.addWidget(self.led_delete_ldev, 3, 1)
@@ -475,9 +481,9 @@ class MyWindow(QMainWindow):
         ldevapi = HighlevelLdev()
         response = ldevapi.provision()
         if response['success']:
-            self.led_provision_ldev.setStyleSheet("background-color: green")
+            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
         else:
-            self.led_provision_ldev.setStyleSheet("background-color: red")
+            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
