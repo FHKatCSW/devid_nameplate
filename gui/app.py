@@ -447,7 +447,7 @@ class MyWindow(QMainWindow):
             if response["data"] is None:
                 self.actual_idev_producer.setText("No IDevID set")
             else:
-                self.result_actual_ldev.setText(json.dumps(response["data"]["cert_string"]))
+                self.result_actual_ldev.setText(json.dumps(response["data"]["cert_str"]))
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
 
