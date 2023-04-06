@@ -65,7 +65,7 @@ class CertOutput(QLabel):
         self.move(15, 15)
         self.setWordWrap(True)
         font = QFont()
-        font.setPointSize(7)
+        font.setPointSize(6)
         self.setFont(font)
 
 class StatusLabel(QLabel):
@@ -433,7 +433,7 @@ class MyWindow(QMainWindow):
         if response["data"] is None:
             self.actual_idev_producer.setText("No IDevID set")
         else:
-            self.actual_idev_producer.setText(json.dumps(response["data"]["o"]))
+            self.actual_idev_producer.setText(str(json.dumps(response["data"]["o"])))
             self.actual_idev_serial.setText(json.dumps(response["data"]["serial_number"]))
             self.actual_idev_produced.setText(json.dumps(response["data"]["validFrom"]))
             self.actual_idev_country.setText(json.dumps(response["data"]["c"]))
