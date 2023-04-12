@@ -61,9 +61,13 @@ class LoadingSpinner(QLabel):
         self.show()
         self.timer.start(1000)
 
-    def stop(self):
+    def postive(self):
         self.timer.stop()
-        self.hide()
+        self.setStyleSheet("background-color: green; border: 1px solid black;")
+
+    def negative(self):
+        self.timer.stop()
+        self.setStyleSheet("background-color: red; border: 1px solid black;")
 
     def change_color(self):
         if self.palette().color(self.backgroundRole()) == Qt.white:
@@ -544,12 +548,11 @@ class MyWindow(QMainWindow):
         ldevapi = HighlevelLdev()
         response = ldevapi.provision_azure()
         if response['success']:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
+            self.led_provision_ldev_azure.postive()
         else:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
+            self.led_provision_ldev_azure.negative()
         #print(response)
         self.control_ldev_interface(True)
-        self.led_provision_ldev_azure.stop()
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
