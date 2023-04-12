@@ -133,7 +133,7 @@ class MyWindow(QMainWindow):
                 font-size: 10pt;
             }
             QPushButton:disabled { 
-                background-color: gray; 
+                background-color: #6c88b2; 
             }
             QTabBar::tab {
                 margin-left:2px;
@@ -439,16 +439,19 @@ class MyWindow(QMainWindow):
         self.tab_actual_ldev.setLayout(self.control_grid_act_ldev)
 
     def delete_idev(self):
+        self.control_idev_interface(False)
         idevapi = HighlevelIdev()
         response = idevapi.delete()
         if response['success']:
             self.led_delete_idev.setStyleSheet("background-color: green")
         else:
             self.led_delete_idev.setStyleSheet("background-color: red")
+        self.control_idev_interface(True)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def provision_idev(self):
+        self.control_idev_interface(False)
         idevapi = HighlevelIdev()
         response = idevapi.provision()
         if response['success']:
@@ -456,10 +459,12 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_idev.setStyleSheet("background-color: red")
         #print(response)
+        self.control_idev_interface(True)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def validate_idev(self):
+        self.control_idev_interface(False)
         idevapi = HighlevelIdev()
         response = idevapi.validate()
         print(response)
@@ -467,46 +472,50 @@ class MyWindow(QMainWindow):
             self.led_validate_idev.setStyleSheet("background-color: green")
         else:
             self.led_validate_idev.setStyleSheet("background-color: red")
+        self.control_idev_interface(True)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def delete_ldev(self):
+        self.control_ldev_interface(False)
         ldevapi = HighlevelLdev()
         response = ldevapi.delete()
         if response['success']:
             self.led_delete_ldev.setStyleSheet("background-color: green")
         else:
             self.led_delete_ldev.setStyleSheet("background-color: red")
+        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
-    def provision_ldev(self):
-        ldevapi = HighlevelLdev()
-        response = ldevapi.provision()
-        if response['success']:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
-        else:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
-        #print(response)
-        self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+    def control_ldev_interface(self, enable):
+        self.button_bootstrap_ldev_opc.setEnabled(enable)
+        self.button_bootstrap_ldev_azure.setEnabled(enable)
+        self.button_bootstrap_ldev_aws.setEnabled(enable)
+        self.button_delete_ldev.setEnabled(enable)
+        self.button_validate_ldev.setEnabled(enable)
+
+    def control_idev_interface(self, enable):
+        self.button_bootstrap_idev.setEnabled(enable)
+        self.button_delete_idev.setEnabled(enable)
+        self.button_validate_idev.setEnabled(enable)
 
     def provision_ldev_opc_server(self):
-        self.button_bootstrap_ldev_opc.setEnabled(False)
+        self.control_ldev_interface(False)
 
         ldevapi = HighlevelLdev()
         response = ldevapi.provision_opc_server()
         if response['success']:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
+            self.led_provision_ldev_opc.setStyleSheet("background-color: green")
         else:
-            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
+            self.led_provision_ldev_opc.setStyleSheet("background-color: red")
         #print(response)
-        self.button_bootstrap_ldev_opc.setEnabled(True)
+        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def provision_ldev_azure(self):
-        self.button_bootstrap_ldev_azure.setEnabled(False)
+        self.control_ldev_interface(False)
 
         ldevapi = HighlevelLdev()
         response = ldevapi.provision_azure()
@@ -515,11 +524,13 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_ldev_azure.setStyleSheet("background-color: red")
         #print(response)
-        self.button_bootstrap_ldev_azure.setEnabled(True)
+        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def provision_ldev_aws(self):
+        self.control_ldev_interface(False)
+
         ldevapi = HighlevelLdev()
         response = ldevapi.provision_aws()
         if response['success']:
@@ -527,6 +538,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_ldev_azure.setStyleSheet("background-color: red")
         #print(response)
+        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
@@ -542,6 +554,7 @@ class MyWindow(QMainWindow):
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def load_actual_idev(self):
+        self.button_reload_idev.setEnabled(False)
         idevapi = HighlevelIdev()
         response = idevapi.provide()
         self.results_idev_cycle.append(json.dumps(response["data"]))
@@ -553,10 +566,13 @@ class MyWindow(QMainWindow):
             self.actual_idev_produced.setText(repr(json.dumps(response["data"]["validFrom"]))[2:-2])
             self.actual_idev_country.setText(repr(json.dumps(response["data"]["c"]))[2:-2])
             self.actual_idev_pseudonym.setText(repr(json.dumps(response["data"]["pseudonym"]))[2:-2])
+        self.button_reload_idev.setEnabled(True)
+
 
 
 
     def load_actual_ldev(self):
+        self.button_reload_ldev.setEnabled(False)
         self.logger.info('Load actual LDevID')
         ldevapi = HighlevelLdev()
         response = ldevapi.provide()
@@ -571,6 +587,8 @@ class MyWindow(QMainWindow):
                 self.result_actual_ldev.setText(new_cert_string)
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
+        self.button_reload_ldev.setEnabled(True)
+
 
 
 if __name__ == '__main__':
