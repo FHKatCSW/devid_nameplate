@@ -52,23 +52,24 @@ class LoadingSpinner(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setFixedSize(20, 20)
-
-        self.setStyleSheet("""
-                   StatusIndicator {
-                       background-color: #d9d9d9;
-                   }
-               """)
-        self.movie = QMovie("/home/admin/devid_nameplate/icons/giphy.gif")
-        self.setMovie(self.movie)
         self.setAlignment(Qt.AlignCenter)
+        self.setStyleSheet("background-color: white; border: 1px solid black;")
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.change_color)
 
     def start(self):
         self.show()
-        self.movie.start()
+        self.timer.start(1000)
 
     def stop(self):
-        self.movie.stop()
+        self.timer.stop()
         self.hide()
+
+    def change_color(self):
+        if self.palette().color(self.backgroundRole()) == Qt.white:
+            self.setStyleSheet("background-color: blue; border: 1px solid black;")
+        else:
+            self.setStyleSheet("background-color: white; border: 1px solid black;")
 
 
 class NameplateLabelHeader(QLabel):
