@@ -132,6 +132,9 @@ class MyWindow(QMainWindow):
                 color: black;
                 font-size: 10pt;
             }
+            QPushButton:disabled { 
+                background-color: gray; 
+            }
             QTabBar::tab {
                 margin-left:2px;
                 margin-right:2px;
@@ -341,9 +344,9 @@ class MyWindow(QMainWindow):
 
         # Connect buttons to API calls and update labels
         self.button_delete_ldev.clicked.connect(lambda: self.delete_ldev())
-        self.button_bootstrap_ldev_azure.clicked.connect(lambda: self.provision_ldev())
-        self.button_bootstrap_ldev_aws.clicked.connect(lambda: self.provision_ldev())
-        self.button_bootstrap_ldev_opc.clicked.connect(lambda: self.provision_ldev())
+        self.button_bootstrap_ldev_azure.clicked.connect(lambda: self.provision_ldev_azure())
+        self.button_bootstrap_ldev_aws.clicked.connect(lambda: self.provision_ldev_aws())
+        self.button_bootstrap_ldev_opc.clicked.connect(lambda: self.provision_ldev_opc_server())
 
         self.button_validate_ldev.clicked.connect(lambda: self.validate_ldev())
 
@@ -480,6 +483,45 @@ class MyWindow(QMainWindow):
     def provision_ldev(self):
         ldevapi = HighlevelLdev()
         response = ldevapi.provision()
+        if response['success']:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
+        else:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
+        #print(response)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def provision_ldev_opc_server(self):
+        self.button_bootstrap_ldev_opc.setEnabled(False)
+
+        ldevapi = HighlevelLdev()
+        response = ldevapi.provision_opc_server()
+        if response['success']:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
+        else:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
+        #print(response)
+        self.button_bootstrap_ldev_opc.setEnabled(True)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def provision_ldev_azure(self):
+        self.button_bootstrap_ldev_azure.setEnabled(False)
+
+        ldevapi = HighlevelLdev()
+        response = ldevapi.provision_azure()
+        if response['success']:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: green")
+        else:
+            self.led_provision_ldev_azure.setStyleSheet("background-color: red")
+        #print(response)
+        self.button_bootstrap_ldev_azure.setEnabled(True)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def provision_ldev_aws(self):
+        ldevapi = HighlevelLdev()
+        response = ldevapi.provision_aws()
         if response['success']:
             self.led_provision_ldev_azure.setStyleSheet("background-color: green")
         else:

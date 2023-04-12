@@ -54,6 +54,21 @@ class HighlevelLdev:
         response = call.post(endpoint="/ldev-highlvl/provision")
         return response
 
+    def provision_opc_server(self):
+        call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
+        response = call.post(endpoint="/ldev-highlvl/provision-opc-ua-server")
+        return response
+
+    def provision_azure(self):
+        call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
+        response = call.post(endpoint="/ldev-highlvl/provision-azure")
+        return response
+
+    def provision_aws(self):
+        call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
+        response = call.post(endpoint="/ldev-highlvl/provision-aws")
+        return response
+
     def provide(self):
         call = RestApiClient(base_url='http://0.0.0.0:5000/v1')
         response = call.get(endpoint="/ldev-highlvl/actual")
