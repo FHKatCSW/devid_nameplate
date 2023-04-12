@@ -3,7 +3,7 @@ import sys
 import os
 
 from PyQt5.QtCore import Qt, QTimer, QSize
-from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen, QPixmap
+from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen, QPixmap, QMovie
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget, QTextEdit
 from PyQt5.QtGui import QIcon
@@ -47,6 +47,28 @@ class StatusIndicator(QLabel):
                        background-color: #d9d9d9;
                    }
                """)
+
+class LoadingSpinner(QLabel):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setFixedSize(20, 20)
+
+        self.setStyleSheet("""
+                   StatusIndicator {
+                       background-color: #d9d9d9;
+                   }
+               """)
+        self.movie = QMovie("/home/admin/devid_nameplate/icons/giphy.gif")
+        self.setMovie(self.movie)
+        self.setAlignment(Qt.AlignCenter)
+
+    def start(self):
+        self.show()
+        self.movie.start()
+
+    def stop(self):
+        self.movie.stop()
+        self.hide()
 
 
 class NameplateLabelHeader(QLabel):
@@ -327,7 +349,7 @@ class MyWindow(QMainWindow):
 
         # Create LED label and add to grid
         # Button 1
-        self.led_provision_ldev_azure = StatusIndicator()
+        self.led_provision_ldev_azure = LoadingSpinner()
         self.control_grid_ldev.addWidget(self.led_provision_ldev_azure, 0, 3)
 
         self.led_provision_ldev_aws = StatusIndicator()
@@ -516,6 +538,7 @@ class MyWindow(QMainWindow):
 
     def provision_ldev_azure(self):
         self.control_ldev_interface(False)
+        self.led_provision_ldev_azure.start()
 
         ldevapi = HighlevelLdev()
         response = ldevapi.provision_azure()
@@ -525,6 +548,7 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_azure.setStyleSheet("background-color: red")
         #print(response)
         self.control_ldev_interface(True)
+        self.led_provision_ldev_azure.stop()
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
