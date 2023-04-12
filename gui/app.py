@@ -53,7 +53,7 @@ class LoadingSpinner(QLabel):
         super().__init__(parent)
         self.setFixedSize(20, 20)
         self.setAlignment(Qt.AlignCenter)
-        self.setStyleSheet("background-color: white; border: 1px solid black;")
+        #self.setStyleSheet("background-color: white; border: 1px solid black;")
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.change_color)
 
