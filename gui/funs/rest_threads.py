@@ -28,7 +28,8 @@ class RestThread(QThread):
             true_count += 1
 
         if true_count > 1 | true_count == 0:
-            raise Exception("RestThread has multiple or no defined request types. Only define one (GET, POST or DELETE)")
+            raise Exception(
+                "RestThread has multiple or no defined request types. Only define one (GET, POST or DELETE)")
 
     def run(self):
         try:
@@ -44,11 +45,9 @@ class RestThread(QThread):
             self.response = json.loads(response.text)
         except requests.exceptions.RequestException as e:
             self.response = {'success': False,
-                        'message': str(e)}
+                             'message': str(e)}
         except Exception as e:
             self.response = {'success': False,
-                        'message': str(e)}
+                             'message': str(e)}
         finally:
             self.rest_response.emit()
-
-

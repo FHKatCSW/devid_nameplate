@@ -355,6 +355,15 @@ class MyWindow(QMainWindow):
         # Hide loading spinner when REST call is complete
         self.loading_spinner.hide()
 
+        response = self.rest_thread_bootstrap_ldev_azure.response
+        if response['success']:
+            self.led_provision_ldev_azure.postive()
+        else:
+            self.led_provision_ldev_azure.negative()
+        #print(response)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
     def control_ldev_interface(self, enable):
         self.button_bootstrap_ldev_opc.setEnabled(enable)
         self.button_bootstrap_ldev_azure.setEnabled(enable)
@@ -436,16 +445,8 @@ class MyWindow(QMainWindow):
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
 
-        # Start REST call in a separate QThread
         self.rest_thread_bootstrap_ldev_azure.start()
-        response = self.rest_thread_bootstrap_ldev_azure.response
-        if response['success']:
-            self.led_provision_ldev_azure.postive()
-        else:
-            self.led_provision_ldev_azure.negative()
-        #print(response)
-        self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
 
     def provision_ldev_aws(self):
         self.control_ldev_interface(False)
