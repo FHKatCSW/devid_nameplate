@@ -424,7 +424,7 @@ class MyWindow(QMainWindow):
             self.led_delete_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_idev(self):
         # Show loading spinner in full screen when button is clicked
@@ -445,7 +445,7 @@ class MyWindow(QMainWindow):
             self.led_provision_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def validate_idev(self):
         # Show loading spinner in full screen when button is clicked
@@ -466,7 +466,7 @@ class MyWindow(QMainWindow):
             self.led_validate_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     ##################
     # LDevID functions
@@ -498,7 +498,7 @@ class MyWindow(QMainWindow):
             self.led_validate_ldev.negative()
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def delete_ldev(self):
         # Show loading spinner in full screen when button is clicked
@@ -519,7 +519,7 @@ class MyWindow(QMainWindow):
             self.led_delete_ldev.negative()
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_opc_server(self):
         # Show loading spinner in full screen when button is clicked
@@ -540,7 +540,7 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_opc.negative()
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_azure(self):
         # Show loading spinner in full screen when button is clicked
@@ -561,7 +561,7 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_azure.negative()
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_aws(self):
         # Show loading spinner in full screen when button is clicked
@@ -582,7 +582,7 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_aws.negative()
         #print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def load_actual_idev(self):
         # Show loading spinner in full screen when button is clicked
