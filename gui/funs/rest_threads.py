@@ -6,13 +6,15 @@ import json
 class RestThread(QThread):
     rest_response = pyqtSignal()  # Signal to indicate REST call is complete
 
-    def __init__(self, base_url, endpoint, params=None, data=None, get=True, post=False, delete=False):
+    def __init__(self, base_url, endpoint, params=None, data=None, get=False, post=False, delete=False):
         super(RestThread, self).__init__()
         self.base_url = base_url
         self.endpoint = endpoint
         self.compl_url = self.base_url + self.endpoint
         self.params = params
         self.data = data
+
+        self.response = {'success': False, 'message': 'Initial Response'}
 
         self.get = get
         self.post = post
@@ -29,7 +31,6 @@ class RestThread(QThread):
             raise Exception("RestThread has multiple or no defined request types. Only define one (GET, POST or DELETE)")
 
     def run(self):
-        self.response = {'success': False, 'message': 'Initial Response'}
         try:
             headers = {'accept': 'application/json'}
             if self.get:
