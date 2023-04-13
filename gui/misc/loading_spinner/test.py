@@ -1,23 +1,33 @@
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QPushButton, QDesktopWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QPushButton, QDesktopWidget, QDialog
 from PyQt5.QtGui import QMovie
 import sys
 import requests  # Import the requests library for REST calls
 import time
 
-class LoadingSpinner(QLabel):
+class LoadingSpinner(QDialog):
     def __init__(self):
         super(LoadingSpinner, self).__init__()
 
-        # Set label properties
-        self.setFixedSize(200, 200)
-        self.setAlignment(Qt.AlignCenter)
+        # Set dialog properties
+        self.setWindowTitle('Loading...')
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setModal(True)
+
+        # Set spinner label properties
+        self.spinner_label = QLabel()
+        self.spinner_label.setAlignment(Qt.AlignCenter)
 
         # Set spinner movie
         movie = QMovie('/home/admin/devid_nameplate/gui/misc/loading_spinner/giphy.gif')
-        self.setMovie(movie)
+        self.spinner_label.setMovie(movie)
         movie.start()
+
+        # Set layout
+        layout = QVBoxLayout()
+        layout.addWidget(self.spinner_label)
+        self.setLayout(layout)
 
 class RestThread(QThread):
     rest_response = pyqtSignal()  # Signal to indicate REST call is complete
@@ -63,8 +73,8 @@ class MyMainWindow(QMainWindow):
 
     def on_button_clicked(self):
         # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | QtCore.Qt.WindowFullScreen)  # Set the window to be fullscreen
 
         # Start REST call in a separate QThread
         self.rest_thread.start()
