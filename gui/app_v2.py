@@ -437,8 +437,8 @@ class MyWindow(QMainWindow):
         self.loading_spinner.show()
 
         # Start REST call in a separate QThread
-        response = self.rest_thread_bootstrap_ldev_azure.start()
-        print(response)
+        self.rest_thread_bootstrap_ldev_azure.start()
+        response = self.rest_thread_bootstrap_ldev_azure.response
         if response['success']:
             self.led_provision_ldev_azure.postive()
         else:

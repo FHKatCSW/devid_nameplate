@@ -12,7 +12,7 @@ class RestThread(QThread):
         self.endpoint = endpoint
         self.compl_url = self.base_url + self.endpoint
         self.params = params
-        self.data = None
+        self.data = data
 
         self.get = get
         self.post = post
@@ -29,7 +29,7 @@ class RestThread(QThread):
             raise Exception("RestThread has multiple or no defined request types. Only define one (GET, POST or DELETE)")
 
     def run(self):
-        response = {'success': False, 'message': 'Initial Response'}
+        self.response = {'success': False, 'message': 'Initial Response'}
         try:
             headers = {'accept': 'application/json'}
             if self.get:
@@ -40,15 +40,14 @@ class RestThread(QThread):
                 response = requests.delete(self.compl_url, params=self.params, headers=headers)
 
             response.raise_for_status()
-            response = json.loads(response.text)
+            self.response = json.loads(response.text)
         except requests.exceptions.RequestException as e:
-            response = {'success': False,
+            self.response = {'success': False,
                         'message': str(e)}
         except Exception as e:
-            response = {'success': False,
+            self.response = {'success': False,
                         'message': str(e)}
         finally:
             self.rest_response.emit()
-            return response
 
 
