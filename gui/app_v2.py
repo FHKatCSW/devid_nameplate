@@ -2,17 +2,19 @@ import json
 import sys
 import os
 
-from PyQt5.QtCore import Qt, QTimer, QSize, QRect
-from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen, QPixmap, QMovie
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
+from PyQt5.QtCore import QSize, Qt
+from PyQt5.QtGui import QColor
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget, QTextEdit
 from PyQt5.QtGui import QIcon
 
 from gui.funs.custom_objects import StatusLabel, QTextEditHandler, StatusIndicator, IconWithSize, NameplateHeader, \
-    NameplateLabel, NameplateLabelHeader, CertOutput
+    NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner
 from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
+from gui.funs.rest_threads import RestThread
+
 import logging
 
 os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=False'
@@ -74,6 +76,9 @@ class MyWindow(QMainWindow):
         # Set the maximum size of the label to fit on the screen
         max_width = int(screen_size.width() * 1)  # Use 90% of the screen width
         max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
+
+        # Create loading spinner
+        self.loading_spinner = LoadingSpinner()
 
         # ------------------
         # Tab for Status
@@ -204,6 +209,13 @@ class MyWindow(QMainWindow):
         self.icon_bootstrap_ldev_azure = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/azure.png")
         self.icon_bootstrap_ldev_aws = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/aws.png")
         self.icon_bootstrap_ldev_opc = IconWithSize(icon_path="/home/admin/devid_nameplate/icons/opc.png")
+
+        # Create rest threads
+        self.rest_thread_bootstrap_ldev_azure = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/provision-azure",
+                                                           post=True)
+        self.rest_thread_bootstrap_ldev_azure.rest_response.connect(self.on_rest_complete)
+
 
         self.button_bootstrap_ldev_azure = QPushButton('Bootstrap')
         self.button_bootstrap_ldev_aws = QPushButton('Bootstrap')
@@ -339,6 +351,22 @@ class MyWindow(QMainWindow):
         self.tabs.addTab(self.tab_actual_ldev, 'LDevID')
         self.tab_actual_ldev.setLayout(self.control_grid_act_ldev)
 
+    def on_rest_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+    def control_ldev_interface(self, enable):
+        self.button_bootstrap_ldev_opc.setEnabled(enable)
+        self.button_bootstrap_ldev_azure.setEnabled(enable)
+        self.button_bootstrap_ldev_aws.setEnabled(enable)
+        self.button_delete_ldev.setEnabled(enable)
+        self.button_validate_ldev.setEnabled(enable)
+
+    def control_idev_interface(self, enable):
+        self.button_bootstrap_idev.setEnabled(enable)
+        self.button_delete_idev.setEnabled(enable)
+        self.button_validate_idev.setEnabled(enable)
+
     def delete_idev(self):
         self.control_idev_interface(False)
         idevapi = HighlevelIdev()
@@ -389,18 +417,6 @@ class MyWindow(QMainWindow):
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
-    def control_ldev_interface(self, enable):
-        self.button_bootstrap_ldev_opc.setEnabled(enable)
-        self.button_bootstrap_ldev_azure.setEnabled(enable)
-        self.button_bootstrap_ldev_aws.setEnabled(enable)
-        self.button_delete_ldev.setEnabled(enable)
-        self.button_validate_ldev.setEnabled(enable)
-
-    def control_idev_interface(self, enable):
-        self.button_bootstrap_idev.setEnabled(enable)
-        self.button_delete_idev.setEnabled(enable)
-        self.button_validate_idev.setEnabled(enable)
-
     def provision_ldev_opc_server(self):
         self.control_ldev_interface(False)
 
@@ -416,16 +432,18 @@ class MyWindow(QMainWindow):
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
     def provision_ldev_azure(self):
-        self.control_ldev_interface(False)
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
 
-        ldevapi = HighlevelLdev()
-        response = ldevapi.provision_azure()
+        # Start REST call in a separate QThread
+        response = self.rest_thread_bootstrap_ldev_azure.start()
+
         if response['success']:
             self.led_provision_ldev_azure.postive()
         else:
             self.led_provision_ldev_azure.negative()
         #print(response)
-        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
@@ -468,9 +486,6 @@ class MyWindow(QMainWindow):
             self.actual_idev_country.setText(repr(json.dumps(response["data"]["c"]))[2:-2])
             self.actual_idev_pseudonym.setText(repr(json.dumps(response["data"]["pseudonym"]))[2:-2])
         self.button_reload_idev.setEnabled(True)
-
-
-
 
     def load_actual_ldev(self):
         self.button_reload_ldev.setEnabled(False)
