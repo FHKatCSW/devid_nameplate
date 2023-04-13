@@ -71,7 +71,7 @@ class MyMainWindow(QMainWindow):
 
     def on_button_clicked(self):
         # Show loading spinner when button is clicked
-        self.loading_spinner.show()
+        self.loading_spinner.showFullScreen()
 
         # Start REST call in a separate QThread
         self.rest_thread.start()
