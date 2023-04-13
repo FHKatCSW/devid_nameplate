@@ -2,7 +2,7 @@ import json
 import sys
 import os
 
-from PyQt5.QtCore import Qt, QTimer, QSize
+from PyQt5.QtCore import Qt, QTimer, QSize, QRect
 from PyQt5.QtGui import QColor, QFont, QPainter, QColor, QPen, QPixmap, QMovie
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QVBoxLayout, QPushButton, QLabel, \
     QGridLayout, QDesktopWidget, QTextEdit
@@ -48,6 +48,38 @@ class StatusIndicator(QLabel):
                    }
                """)
 
+
+class LoadingGif(object):
+
+    def mainUI(self, FrontWindow):
+        FrontWindow.setObjectName("FTwindow")
+        FrontWindow.resize(320, 300)
+        self.centralwidget = QWidget(FrontWindow)
+        self.centralwidget.setObjectName("main-widget")
+
+        # Label Create
+        self.label = QLabel(self.centralwidget)
+        self.label.setGeometry(QRect(25, 25, 200, 200))
+        self.label.setMinimumSize(QSize(250, 250))
+        self.label.setMaximumSize(QSize(250, 250))
+        self.label.setObjectName("lb1")
+        FrontWindow.setCentralWidget(self.centralwidget)
+
+        # Loading the GIF
+        self.movie = QMovie("/home/admin/devid_nameplate/icons/giphy.gif")
+        self.label.setMovie(self.movie)
+
+        self.startAnimation()
+
+    # Start Animation
+
+    def startAnimation(self):
+        self.movie.start()
+
+    # Stop Animation(According to need)
+    def stopAnimation(self):
+        self.movie.stop()
+
 class LoadingSpinner(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -74,6 +106,26 @@ class LoadingSpinner(QLabel):
             self.setStyleSheet("background-color: blue; border: 1px solid black;")
         else:
             self.setStyleSheet("background-color: white; border: 1px solid black;")
+
+class LoadingSpinnerFront(QWidget):
+    def __init__(self):
+        super(LoadingSpinnerFront, self).__init__()
+
+        # Set window properties
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setFixedSize(200, 200)
+
+        # Set layout
+        layout = QVBoxLayout()
+        self.setLayout(layout)
+
+        # Add spinner movie
+        movie = QMovie("/home/admin/devid_nameplate/icons/giphy.gif")
+        spinner_label = QLabel()
+        spinner_label.setMovie(movie)
+        movie.start()
+        layout.addWidget(spinner_label)
 
 
 class NameplateLabelHeader(QLabel):
@@ -200,6 +252,9 @@ class MyWindow(QMainWindow):
         # Set the maximum size of the label to fit on the screen
         max_width = int(screen_size.width() * 1)  # Use 90% of the screen width
         max_height = int(screen_size.height() * 0.9)  # Use 90% of the screen height
+
+        # Create loading spinner
+        self.loading_spinner = LoadingSpinner()
 
         # ------------------
         # Tab for Status
