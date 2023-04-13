@@ -4,14 +4,12 @@ import os
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QColor
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QPushButton, QLabel, \
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QPushButton, \
     QGridLayout, QDesktopWidget, QTextEdit
 from PyQt5.QtGui import QIcon
 
 from gui.funs.custom_objects import StatusLabel, QTextEditHandler, StatusIndicator, IconWithSize, NameplateHeader, \
     NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner, OutputLabel
-from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
-from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
 from gui.funs.rest_threads import RestThread
 
@@ -63,9 +61,9 @@ class MyWindow(QMainWindow):
         self.results_idev_cycle = []
         self.results_ldev_cycle = []
 
-        self.color_on = QColor(124,252,0)
-        self.color_off = QColor(255,99,71)
-        #self.state = False
+        self.color_on = QColor(124, 252, 0)
+        self.color_off = QColor(255, 99, 71)
+        # self.state = False
 
         # Create tabs
         self.tabs = QTabWidget()
@@ -89,7 +87,6 @@ class MyWindow(QMainWindow):
         # Create a QTextEdit widget to display log messages
         self.log_widget = QTextEdit()
         self.log_grid.addWidget(self.log_widget)
-
 
         # Create a logger and add the QTextEditHandler to it
         self.logger = logging.getLogger()
@@ -122,7 +119,6 @@ class MyWindow(QMainWindow):
         self.status_grid.addWidget(self.status_label_hsm, 1, 0)
         hsm_led = RestLed(url="http://0.0.0.0:5000/v1", endpoint="/mgmt/status/hsm")
         self.status_grid.addWidget(hsm_led, 1, 1)
-
 
         # Status for IDevID
         self.status_label_idev = StatusLabel("IDevID")
@@ -163,25 +159,25 @@ class MyWindow(QMainWindow):
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
         self.rest_thread_provision_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/idev-highlvl/provision",
-                                                           post=True)
+                                                     endpoint="/idev-highlvl/provision",
+                                                     post=True)
         self.rest_thread_provision_idev.rest_response.connect(self.provision_idev_complete)
         self.rest_thread_validate_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/idev-highlvl/validate",
-                                                           post=True)
+                                                    endpoint="/idev-highlvl/validate",
+                                                    post=True)
         self.rest_thread_validate_idev.rest_response.connect(self.validate_idev_complete)
         self.rest_thread_delete_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/idev-highlvl/delete",
-                                                           delete=True)
+                                                  endpoint="/idev-highlvl/delete",
+                                                  delete=True)
         self.rest_thread_delete_idev.rest_response.connect(self.delete_idev_complete)
 
         # Create buttons for first tab
         self.button_bootstrap_idev = QPushButton('Bootstrap\nIDev')
         self.button_delete_idev = QPushButton('Delete\nIDev')
         self.button_validate_idev = QPushButton('Validate\nIDev')
-        self.button_bootstrap_idev.setFixedSize(100,40)
-        self.button_delete_idev.setFixedSize(100,40)
-        self.button_validate_idev.setFixedSize(100,40)
+        self.button_bootstrap_idev.setFixedSize(100, 40)
+        self.button_delete_idev.setFixedSize(100, 40)
+        self.button_validate_idev.setFixedSize(100, 40)
         self.control_grid_idev.addWidget(self.button_bootstrap_idev, 0, 0)
         self.control_grid_idev.addWidget(self.button_delete_idev, 1, 0)
         self.control_grid_idev.addWidget(self.button_validate_idev, 2, 0)
@@ -229,22 +225,21 @@ class MyWindow(QMainWindow):
                                                            post=True)
         self.rest_thread_bootstrap_ldev_azure.rest_response.connect(self.provision_ldev_azure_complete)
         self.rest_thread_bootstrap_ldev_aws = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/ldev-highlvl/provision-aws",
-                                                           post=True)
+                                                         endpoint="/ldev-highlvl/provision-aws",
+                                                         post=True)
         self.rest_thread_bootstrap_ldev_aws.rest_response.connect(self.provision_ldev_aws_complete)
         self.rest_thread_bootstrap_ldev_opc = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/ldev-highlvl/provision-opc-ua-server",
-                                                           post=True)
+                                                         endpoint="/ldev-highlvl/provision-opc-ua-server",
+                                                         post=True)
         self.rest_thread_bootstrap_ldev_opc.rest_response.connect(self.provision_ldev_opc_complete)
         self.rest_thread_validate_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/ldev-highlvl/validate",
-                                                           post=True)
+                                                    endpoint="/ldev-highlvl/validate",
+                                                    post=True)
         self.rest_thread_validate_ldev.rest_response.connect(self.validate_ldev_complete)
         self.rest_thread_delete_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/ldev-highlvl/delete",
-                                                           delete=True)
+                                                  endpoint="/ldev-highlvl/delete",
+                                                  delete=True)
         self.rest_thread_delete_ldev.rest_response.connect(self.delete_ldev_complete)
-
 
         self.button_bootstrap_ldev_azure = QPushButton('Bootstrap')
         self.button_bootstrap_ldev_aws = QPushButton('Bootstrap')
@@ -252,13 +247,12 @@ class MyWindow(QMainWindow):
 
         self.button_delete_ldev = QPushButton('Delete\nLDev')
         self.button_validate_ldev = QPushButton('Validate\nLDev')
-        self.button_delete_ldev.setFixedSize(80,40)
-        self.button_validate_ldev.setFixedSize(80,40)
+        self.button_delete_ldev.setFixedSize(80, 40)
+        self.button_validate_ldev.setFixedSize(80, 40)
 
         self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_azure, 0, 0)
         self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_aws, 1, 0)
         self.control_grid_ldev.addWidget(self.icon_bootstrap_ldev_opc, 2, 0)
-
 
         self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_azure, 0, 1)
         self.control_grid_ldev.addWidget(self.button_bootstrap_ldev_aws, 1, 1)
@@ -307,10 +301,9 @@ class MyWindow(QMainWindow):
         self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 1)
 
         self.rest_thread_actual_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/idev-highlvl/actual",
-                                                           get=True)
+                                                  endpoint="/idev-highlvl/actual",
+                                                  get=True)
         self.rest_thread_actual_idev.rest_response.connect(self.actual_idev_complete)
-
 
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
@@ -318,7 +311,6 @@ class MyWindow(QMainWindow):
         self.button_reload_idev.setIconSize(QSize(32, 32))
         self.button_reload_idev.setFixedSize(40, 40)
         self.control_grid_act_idev.addWidget(self.button_reload_idev, 0, 0)
-
 
         self.button_reload_idev.clicked.connect(lambda: self.load_actual_idev())
 
@@ -333,14 +325,14 @@ class MyWindow(QMainWindow):
         self.actual_idev_produced = NameplateLabel(self)
         self.actual_idev_produced_label = NameplateLabelHeader("Produced:")
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label,2, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_produced_label, 2, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_produced, 2, 1)
 
         # Pseudonym
         self.actual_idev_pseudonym = NameplateLabel(self)
         self.actual_idev_pseudonym_label = NameplateLabelHeader('Product:')
 
-        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label,3, 0)
+        self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym_label, 3, 0)
         self.control_grid_act_idev.addWidget(self.actual_idev_pseudonym, 3, 1)
 
         # Serial Number
@@ -372,8 +364,8 @@ class MyWindow(QMainWindow):
         self.control_grid_act_ldev.addWidget(self.result_actual_ldev, 0, 1, 1, 1)
 
         self.rest_thread_actual_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                           endpoint="/ldev-highlvl/actual",
-                                                           get=True)
+                                                  endpoint="/ldev-highlvl/actual",
+                                                  get=True)
         self.rest_thread_actual_ldev.rest_response.connect(self.actual_ldev_complete)
 
         self.button_reload_ldev = QPushButton()
@@ -382,7 +374,6 @@ class MyWindow(QMainWindow):
         self.button_reload_ldev.setIconSize(QSize(32, 32))
         self.button_reload_ldev.setFixedSize(40, 40)
         self.control_grid_act_ldev.addWidget(self.button_reload_ldev, 0, 0)
-
 
         self.button_reload_ldev.clicked.connect(lambda: self.load_actual_ldev())
 
@@ -401,7 +392,8 @@ class MyWindow(QMainWindow):
 
     def delete_idev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_idev_status()
 
@@ -416,13 +408,14 @@ class MyWindow(QMainWindow):
             self.led_delete_idev.postive()
         else:
             self.led_delete_idev.negative()
-        #print(response)
+        # print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_idev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_idev_status()
 
@@ -437,13 +430,14 @@ class MyWindow(QMainWindow):
             self.led_provision_idev.postive()
         else:
             self.led_provision_idev.negative()
-        #print(response)
+        # print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def validate_idev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_idev_status()
 
@@ -458,7 +452,7 @@ class MyWindow(QMainWindow):
             self.led_validate_idev.postive()
         else:
             self.led_validate_idev.negative()
-        #print(response)
+        # print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
         self.result_label_idev.setText(repr(json.dumps(response["message"]))[2:-2])
 
@@ -475,7 +469,8 @@ class MyWindow(QMainWindow):
 
     def validate_ldev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_ldev_status()
 
@@ -490,13 +485,14 @@ class MyWindow(QMainWindow):
             self.led_validate_ldev.postive()
         else:
             self.led_validate_ldev.negative()
-        #print(response)
+        # print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def delete_ldev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_ldev_status()
 
@@ -511,13 +507,14 @@ class MyWindow(QMainWindow):
             self.led_delete_ldev.postive()
         else:
             self.led_delete_ldev.negative()
-        #print(response)
+        # print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_opc_server(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_ldev_status()
 
@@ -532,13 +529,14 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_opc.postive()
         else:
             self.led_provision_ldev_opc.negative()
-        #print(response)
+        # print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_azure(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_ldev_status()
 
@@ -553,13 +551,14 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_azure.postive()
         else:
             self.led_provision_ldev_azure.negative()
-        #print(response)
+        # print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def provision_ldev_aws(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
         self.reset_ldev_status()
 
@@ -574,13 +573,14 @@ class MyWindow(QMainWindow):
             self.led_provision_ldev_aws.postive()
         else:
             self.led_provision_ldev_aws.negative()
-        #print(response)
+        # print(response)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
     def load_actual_idev(self):
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
 
         self.rest_thread_actual_idev.start()
@@ -602,7 +602,8 @@ class MyWindow(QMainWindow):
     def load_actual_ldev(self):
         self.logger.info("- Load actual LDevID")
         # Show loading spinner in full screen when button is clicked
-        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
 
         self.rest_thread_actual_ldev.start()
