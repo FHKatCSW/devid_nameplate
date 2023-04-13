@@ -1,5 +1,5 @@
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QPushButton, QDesktopWidget
 from PyQt5.QtGui import QMovie
 import sys
 import requests  # Import the requests library for REST calls
@@ -39,26 +39,17 @@ class MyMainWindow(QMainWindow):
         self.setGeometry(100, 100, 800, 600)
 
         # Create central widget
-        central_widget = QWidget()
+        central_widget = QTabWidget()
         self.setCentralWidget(central_widget)
-
-        # Create layout for central widget
-        layout = QVBoxLayout()
-        central_widget.setLayout(layout)
-
-        # Create tab widget
-        tab_widget = QTabWidget()
-        layout.addWidget(tab_widget)
 
         # Create tabs
         tab1 = QWidget()
         tab2 = QWidget()
-        tab_widget.addTab(tab1, 'Tab 1')
-        tab_widget.addTab(tab2, 'Tab 2')
+        central_widget.addTab(tab1, 'Tab 1')
+        central_widget.addTab(tab2, 'Tab 2')
 
         # Create loading spinner
         self.loading_spinner = LoadingSpinner()
-        self.loading_spinner.hide()
 
         # Create REST thread
         self.rest_thread = RestThread()
@@ -67,11 +58,12 @@ class MyMainWindow(QMainWindow):
         # Create button
         button = QPushButton('Trigger REST Call')
         button.clicked.connect(self.on_button_clicked)
-        layout.addWidget(button)
+        self.statusBar().addWidget(button)
 
     def on_button_clicked(self):
-        # Show loading spinner when button is clicked
-        self.loading_spinner.showFullScreen()
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.show()
+        self.loading_spinner.setGeometry(QDesktopWidget().availableGeometry())  # Set dialog size to screen size
 
         # Start REST call in a separate QThread
         self.rest_thread.start()
