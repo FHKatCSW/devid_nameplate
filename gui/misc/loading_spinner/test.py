@@ -1,4 +1,5 @@
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QTabWidget, QPushButton, QDesktopWidget
 from PyQt5.QtGui import QMovie
 import sys
@@ -76,6 +77,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     window = MyMainWindow()
+    window.setWindowState(window.windowState() | QtCore.Qt.WindowFullScreen)  # Set the window to be fullscreen
+    window.setWindowFlags(QtCore.Qt.FramelessWindowHint)  # Remove the title bar and border
 
     window.show()
 
