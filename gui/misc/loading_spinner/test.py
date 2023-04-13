@@ -64,7 +64,7 @@ class MyMainWindow(QMainWindow):
     def on_button_clicked(self):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.show()
-        self.loading_spinner.setWindowState(window.windowState() | QtCore.Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | QtCore.Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.setWindowFlags(QtCore.Qt.FramelessWindowHint)  # Remove the title bar and border
 
         # Start REST call in a separate QThread
