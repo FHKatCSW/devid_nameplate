@@ -136,6 +136,12 @@ class MyWindow(QMainWindow):
         ldev_led = RestLed(url="http://0.0.0.0:5000/v1", endpoint="/mgmt/status/ldevid")
         self.status_grid.addWidget(ldev_led, 3, 1)
 
+        # Status for EJBCA
+        self.status_label_ejbca = StatusLabel("EJBCA")
+        self.status_grid.addWidget(self.status_label_ejbca, 4, 0)
+        ejbca_led = RestLed(url="http://0.0.0.0:5000/v1", endpoint="/mgmt/status/ejbca")
+        self.status_grid.addWidget(ejbca_led, 4, 1)
+
         self.tab0 = QWidget()
         self.tabs.addTab(self.tab0, 'Status')
         self.tab0.setLayout(self.status_grid)
@@ -412,7 +418,7 @@ class MyWindow(QMainWindow):
             self.led_delete_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def provision_idev(self):
         # Show loading spinner in full screen when button is clicked
@@ -432,7 +438,7 @@ class MyWindow(QMainWindow):
             self.led_provision_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     def validate_idev(self):
         # Show loading spinner in full screen when button is clicked
@@ -452,7 +458,7 @@ class MyWindow(QMainWindow):
             self.led_validate_idev.negative()
         #print(response)
         self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
 
     ##################
     # LDevID functions
