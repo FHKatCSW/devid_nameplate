@@ -26,6 +26,19 @@ class NameplateLabel(QLabel):
 
         super().paintEvent(event)
 
+class OutputLabel(QLabel):
+    def __init__(self, width=300, height=250, parent=None):
+        super(OutputLabel, self).__init__(parent)
+        dpi = self.logicalDpiX()  # Get the DPI of the screen in X direction
+        radius_mm = 2  # Corner radius in millimeters
+        radius_px = int(radius_mm * dpi / 25.4)  # Convert millimeters to pixels
+        margin_px = 20  # Margin in pixels
+        self.setFixedSize(width, height)
+        self.move(80, 80)
+        self.setWordWrap(True)
+        self.setStyleSheet(f"background-color: white; border-radius: {radius_px}px; padding: {margin_px}px;")
+        self.setContentsMargins(margin_px, margin_px, margin_px, margin_px)
+
 class StatusIndicator(QLabel):
     def __init__(self, parent=None):
         super().__init__(parent)

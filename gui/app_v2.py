@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QPus
 from PyQt5.QtGui import QIcon
 
 from gui.funs.custom_objects import StatusLabel, QTextEditHandler, StatusIndicator, IconWithSize, NameplateHeader, \
-    NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner
+    NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner, OutputLabel
 from gui.funs.highlevel import HighlevelIdev, HighlevelLdev
 from gui.funs.rest import RestApiClient
 from gui.funs.status_led import RestLed
@@ -158,10 +158,7 @@ class MyWindow(QMainWindow):
         self.control_grid_idev = QGridLayout()
         self.control_grid_idev.setSpacing(5)
 
-        self.result_label_idev = QLabel(self)
-        self.result_label_idev.setFixedSize(300,250)
-        self.result_label_idev.move(80, 80)
-        self.result_label_idev.setWordWrap(True)
+        self.result_label_idev = OutputLabel(self)
 
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
@@ -217,10 +214,7 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev = QGridLayout()
         self.control_grid_ldev.setSpacing(5)
 
-        self.result_label_ldev = QLabel(self)
-        self.result_label_idev.setFixedSize(300,250)
-        self.result_label_ldev.move(80, 80)
-        self.result_label_ldev.setWordWrap(True)
+        self.result_label_ldev = OutputLabel(self)
 
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 4, 5, 4)
 
