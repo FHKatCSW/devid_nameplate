@@ -154,7 +154,7 @@ class MyWindow(QMainWindow):
         self.control_grid_idev = QGridLayout()
         self.control_grid_idev.setSpacing(5)
 
-        self.result_label_idev = OutputLabel(self)
+        self.result_label_idev = OutputLabel(size_width=320, size_height=250, parent=self)
 
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
@@ -210,7 +210,7 @@ class MyWindow(QMainWindow):
         self.control_grid_ldev = QGridLayout()
         self.control_grid_ldev.setSpacing(5)
 
-        self.result_label_ldev = OutputLabel(self)
+        self.result_label_ldev = OutputLabel(size_width=250, size_height=250, parent=self)
 
         self.control_grid_ldev.addWidget(self.result_label_ldev, 0, 4, 5, 4)
 
