@@ -29,7 +29,7 @@ class RestThread(QThread):
             raise Exception("RestThread has multiple or no defined request types. Only define one (GET, POST or DELETE)")
 
     def run(self):
-        global response
+        response = {'success': False, 'message': 'Initial Response'}
         try:
             headers = {'accept': 'application/json'}
             if self.get:
