@@ -29,6 +29,9 @@ class LoadingSpinner(QDialog):
         layout.addWidget(self.spinner_label)
         self.setLayout(layout)
 
+        # Set background color
+        self.setStyleSheet("background-color: #FFFFFF;")
+
 class RestThread(QThread):
     rest_response = pyqtSignal()  # Signal to indicate REST call is complete
 
