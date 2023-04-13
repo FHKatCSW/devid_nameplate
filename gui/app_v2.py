@@ -400,10 +400,16 @@ class MyWindow(QMainWindow):
     # IDevID functions
     ##################
 
+    def reset_idev_status(self):
+        self.led_validate_idev.reset()
+        self.led_delete_idev.reset()
+        self.led_provision_idev.reset()
+
     def delete_idev(self):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_idev_status()
 
         self.rest_thread_delete_idev.start()
 
@@ -424,6 +430,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_idev_status()
 
         self.rest_thread_provision_idev.start()
 
@@ -444,6 +451,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_idev_status()
 
         self.rest_thread_validate_idev.start()
 
@@ -464,10 +472,18 @@ class MyWindow(QMainWindow):
     # LDevID functions
     ##################
 
+    def reset_ldev_status(self):
+        self.led_validate_ldev.reset()
+        self.led_delete_ldev.reset()
+        self.led_provision_ldev_opc.reset()
+        self.led_provision_ldev_azure.reset()
+        self.led_provision_ldev_azure.reset()
+
     def validate_ldev(self):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_ldev_status()
 
         self.rest_thread_validate_ldev.start()
 
@@ -488,6 +504,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_ldev_status()
 
         self.rest_thread_delete_ldev.start()
 
@@ -508,6 +525,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_ldev_status()
 
         self.rest_thread_bootstrap_ldev_opc.start()
 
@@ -528,6 +546,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_ldev_status()
 
         self.rest_thread_bootstrap_ldev_azure.start()
 
@@ -548,6 +567,7 @@ class MyWindow(QMainWindow):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
+        self.reset_ldev_status()
 
         self.rest_thread_bootstrap_ldev_aws.start()
 
@@ -586,6 +606,7 @@ class MyWindow(QMainWindow):
             self.actual_idev_pseudonym.setText(repr(json.dumps(response["data"]["pseudonym"]))[2:-2])
 
     def load_actual_ldev(self):
+        self.logger.info("- Load actual LDevID")
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
@@ -599,11 +620,13 @@ class MyWindow(QMainWindow):
         response = self.rest_thread_actual_ldev.response
         try:
             if response["data"] is None:
-                self.actual_idev_producer.setText("No IDevID set")
+                self.result_actual_ldev.setText("No LDevID set")
+                self.logger.info("-- No LDevID set")
             else:
                 orig_cert_string = repr(json.dumps(response["data"]["cert_str"]))[5:-5]
                 new_cert_string = orig_cert_string.replace('\\\\n', '\n')
                 new_cert_string = new_cert_string.replace('\\', '')
+                self.logger.info("Result: {}".format(new_cert_string))
                 self.result_actual_ldev.setText(new_cert_string)
         except Exception as err:
             self.result_actual_ldev.setText(str(err))

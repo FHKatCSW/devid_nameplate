@@ -42,6 +42,9 @@ class StatusIndicator(QLabel):
     def negative(self):
         self.setStyleSheet("background-color: red;")
 
+    def reset(self):
+        self.setStyleSheet("background-color: #d9d9d9;")
+
 class LoadingSpinner(QDialog):
     def __init__(self):
         super(LoadingSpinner, self).__init__()
