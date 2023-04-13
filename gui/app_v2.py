@@ -159,6 +159,19 @@ class MyWindow(QMainWindow):
 
         self.control_grid_idev.addWidget(self.result_label_idev, 0, 2, 3, 2)
 
+        self.rest_thread_provision_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/idev-highlvl/provision",
+                                                           post=True)
+        self.rest_thread_provision_idev.rest_response.connect(self.provision_idev_complete)
+        self.rest_thread_validate_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/idev-highlvl/validate",
+                                                           post=True)
+        self.rest_thread_validate_idev.rest_response.connect(self.validate_idev_complete)
+        self.rest_thread_delete_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/idev-highlvl/delete",
+                                                           delete=True)
+        self.rest_thread_delete_idev.rest_response.connect(self.delete_idev_complete)
+
         # Create buttons for first tab
         self.button_bootstrap_idev = QPushButton('Bootstrap\nIDev')
         self.button_delete_idev = QPushButton('Delete\nIDev')
@@ -214,7 +227,23 @@ class MyWindow(QMainWindow):
         self.rest_thread_bootstrap_ldev_azure = RestThread(base_url='http://0.0.0.0:5000/v1',
                                                            endpoint="/ldev-highlvl/provision-azure",
                                                            post=True)
-        self.rest_thread_bootstrap_ldev_azure.rest_response.connect(self.on_rest_complete)
+        self.rest_thread_bootstrap_ldev_azure.rest_response.connect(self.provision_ldev_azure_complete)
+        self.rest_thread_bootstrap_ldev_aws = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/provision-aws",
+                                                           post=True)
+        self.rest_thread_bootstrap_ldev_aws.rest_response.connect(self.provision_ldev_aws_complete)
+        self.rest_thread_bootstrap_ldev_opc = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/provision-opc-ua-server",
+                                                           post=True)
+        self.rest_thread_bootstrap_ldev_opc.rest_response.connect(self.provision_ldev_opc_complete)
+        self.rest_thread_validate_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/validate",
+                                                           post=True)
+        self.rest_thread_validate_ldev.rest_response.connect(self.validate_ldev_complete)
+        self.rest_thread_delete_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/delete",
+                                                           delete=True)
+        self.rest_thread_delete_ldev.rest_response.connect(self.delete_ldev_complete)
 
 
         self.button_bootstrap_ldev_azure = QPushButton('Bootstrap')
@@ -277,6 +306,11 @@ class MyWindow(QMainWindow):
         self.actual_idev_nameplate = NameplateHeader('Nameplate')
         self.control_grid_act_idev.addWidget(self.actual_idev_nameplate, 0, 1)
 
+        self.rest_thread_actual_idev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/idev-highlvl/actual",
+                                                           get=True)
+        self.rest_thread_actual_idev.rest_response.connect(self.actual_idev_complete)
+
 
         self.button_reload_idev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
@@ -337,6 +371,11 @@ class MyWindow(QMainWindow):
 
         self.control_grid_act_ldev.addWidget(self.result_actual_ldev, 0, 1, 1, 1)
 
+        self.rest_thread_actual_ldev = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                           endpoint="/ldev-highlvl/actual",
+                                                           get=True)
+        self.rest_thread_actual_ldev.rest_response.connect(self.actual_ldev_complete)
+
         self.button_reload_ldev = QPushButton()
         icon = QIcon("/home/admin/devid_nameplate/icons/rotate-icon.png")  # Load the icon from a file path
         self.button_reload_ldev.setIcon(icon)
@@ -351,7 +390,142 @@ class MyWindow(QMainWindow):
         self.tabs.addTab(self.tab_actual_ldev, 'LDevID')
         self.tab_actual_ldev.setLayout(self.control_grid_act_ldev)
 
-    def on_rest_complete(self):
+    ##################
+    # IDevID functions
+    ##################
+
+    def delete_idev(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_idev.start()
+
+    def delete_idev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_idev.response
+        if response['success']:
+            self.led_delete_idev.postive()
+        else:
+            self.led_delete_idev.negative()
+        #print(response)
+        self.results_control_idev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+
+    def provision_idev(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_provision_idev.start()
+
+    def provision_idev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_provision_idev.response
+        if response['success']:
+            self.led_provision_idev.postive()
+        else:
+            self.led_provision_idev.negative()
+        #print(response)
+        self.results_control_idev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+
+    def validate_idev(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_validate_idev.start()
+
+    def validate_idev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_validate_idev.response
+        if response['success']:
+            self.led_validate_idev.postive()
+        else:
+            self.led_validate_idev.negative()
+        #print(response)
+        self.results_control_idev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_idev[-1]))
+
+    ##################
+    # LDevID functions
+    ##################
+
+    def validate_ldev(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_validate_ldev.start()
+
+    def validate_ldev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_validate_ldev.response
+        if response['success']:
+            self.led_validate_ldev.postive()
+        else:
+            self.led_validate_ldev.negative()
+        #print(response)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def delete_ldev(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_ldev.start()
+
+    def delete_ldev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_ldev.response
+        if response['success']:
+            self.led_delete_ldev.postive()
+        else:
+            self.led_delete_ldev.negative()
+        #print(response)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def provision_ldev_opc_server(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_bootstrap_ldev_opc.start()
+
+    def provision_ldev_opc_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_bootstrap_ldev_opc.response
+        if response['success']:
+            self.led_provision_ldev_opc.postive()
+        else:
+            self.led_provision_ldev_opc.negative()
+        #print(response)
+        self.results_control_ldev.append(json.dumps(response["message"]))
+        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
+
+    def provision_ldev_azure(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_bootstrap_ldev_azure.start()
+
+    def provision_ldev_azure_complete(self):
         # Hide loading spinner when REST call is complete
         self.loading_spinner.hide()
 
@@ -364,120 +538,38 @@ class MyWindow(QMainWindow):
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
-    def control_ldev_interface(self, enable):
-        self.button_bootstrap_ldev_opc.setEnabled(enable)
-        self.button_bootstrap_ldev_azure.setEnabled(enable)
-        self.button_bootstrap_ldev_aws.setEnabled(enable)
-        self.button_delete_ldev.setEnabled(enable)
-        self.button_validate_ldev.setEnabled(enable)
-
-    def control_idev_interface(self, enable):
-        self.button_bootstrap_idev.setEnabled(enable)
-        self.button_delete_idev.setEnabled(enable)
-        self.button_validate_idev.setEnabled(enable)
-
-    def delete_idev(self):
-        self.control_idev_interface(False)
-        idevapi = HighlevelIdev()
-        response = idevapi.delete()
-        if response['success']:
-            self.led_delete_idev.postive()
-        else:
-            self.led_delete_idev.negative()
-        self.control_idev_interface(True)
-        self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
-
-    def provision_idev(self):
-        self.control_idev_interface(False)
-        idevapi = HighlevelIdev()
-        response = idevapi.provision()
-        if response['success']:
-            self.led_provision_idev.postive()
-        else:
-            self.led_provision_idev.negative()
-        #print(response)
-        self.control_idev_interface(True)
-        self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
-
-    def validate_idev(self):
-        self.control_idev_interface(False)
-        idevapi = HighlevelIdev()
-        response = idevapi.validate()
-        print(response)
-        if response['success']:
-            self.led_validate_idev.postive()
-        else:
-            self.led_validate_idev.negative()
-        self.control_idev_interface(True)
-        self.results_control_idev.append(json.dumps(response["message"]))
-        self.result_label_idev.setText(json.dumps(self.results_control_idev[-1]))
-
-    def delete_ldev(self):
-        self.control_ldev_interface(False)
-        ldevapi = HighlevelLdev()
-        response = ldevapi.delete()
-        if response['success']:
-            self.led_delete_ldev.postive()
-        else:
-            self.led_delete_ldev.negative()
-        self.control_ldev_interface(True)
-        self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
-
-    def provision_ldev_opc_server(self):
-        self.control_ldev_interface(False)
-
-        ldevapi = HighlevelLdev()
-        response = ldevapi.provision_opc_server()
-        if response['success']:
-            self.led_provision_ldev_opc.postive()
-        else:
-            self.led_provision_ldev_opc.negative()
-        #print(response)
-        self.control_ldev_interface(True)
-        self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
-
-    def provision_ldev_azure(self):
+    def provision_ldev_aws(self):
         # Show loading spinner in full screen when button is clicked
         self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
         self.loading_spinner.show()
 
-        self.rest_thread_bootstrap_ldev_azure.start()
+        self.rest_thread_bootstrap_ldev_aws.start()
 
+    def provision_ldev_aws_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
 
-    def provision_ldev_aws(self):
-        self.control_ldev_interface(False)
-
-        ldevapi = HighlevelLdev()
-        response = ldevapi.provision_aws()
+        response = self.rest_thread_bootstrap_ldev_aws.response
         if response['success']:
-            self.led_provision_ldev_azure.postive()
+            self.led_provision_ldev_aws.postive()
         else:
-            self.led_provision_ldev_azure.negative()
+            self.led_provision_ldev_aws.negative()
         #print(response)
-        self.control_ldev_interface(True)
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(json.dumps(self.results_control_ldev[-1]))
 
-    def validate_ldev(self):
-        ldevapi = HighlevelLdev()
-        response = ldevapi.validate()
-        print(response)
-        if response['success']:
-            self.led_validate_ldev.postive()
-        else:
-            self.led_validate_ldev.negative()
-        self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
-
     def load_actual_idev(self):
-        self.button_reload_idev.setEnabled(False)
-        idevapi = HighlevelIdev()
-        response = idevapi.provide()
-        self.results_idev_cycle.append(json.dumps(response["data"]))
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_actual_idev.start()
+
+    def actual_idev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_actual_idev.response
         if response["data"] is None:
             self.actual_idev_producer.setText("No IDevID set")
         else:
@@ -486,14 +578,19 @@ class MyWindow(QMainWindow):
             self.actual_idev_produced.setText(repr(json.dumps(response["data"]["validFrom"]))[2:-2])
             self.actual_idev_country.setText(repr(json.dumps(response["data"]["c"]))[2:-2])
             self.actual_idev_pseudonym.setText(repr(json.dumps(response["data"]["pseudonym"]))[2:-2])
-        self.button_reload_idev.setEnabled(True)
 
     def load_actual_ldev(self):
-        self.button_reload_ldev.setEnabled(False)
-        self.logger.info('Load actual LDevID')
-        ldevapi = HighlevelLdev()
-        response = ldevapi.provide()
-        self.results_ldev_cycle.append(json.dumps(response["data"]))
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_actual_ldev.start()
+
+    def actual_ldev_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_actual_ldev.response
         try:
             if response["data"] is None:
                 self.actual_idev_producer.setText("No IDevID set")
@@ -504,8 +601,6 @@ class MyWindow(QMainWindow):
                 self.result_actual_ldev.setText(new_cert_string)
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
-        self.button_reload_ldev.setEnabled(True)
-
 
 
 if __name__ == '__main__':
