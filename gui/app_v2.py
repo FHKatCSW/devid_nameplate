@@ -438,7 +438,7 @@ class MyWindow(QMainWindow):
 
         # Start REST call in a separate QThread
         response = self.rest_thread_bootstrap_ldev_azure.start()
-
+        print(response)
         if response['success']:
             self.led_provision_ldev_azure.postive()
         else:
