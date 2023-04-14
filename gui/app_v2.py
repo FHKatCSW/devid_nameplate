@@ -575,7 +575,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_ldev_aws.negative()
         # print(response)
-        self.logger.info("*** HSM Key count: {}".format(json.dumps(response["hsm_key_cnt"])))
+        self.logger.info("*** HSM Key count: {}".format(str(json.dumps(response["hsm_key_cnt"]))))
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 
