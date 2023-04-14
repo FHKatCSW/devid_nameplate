@@ -72,6 +72,9 @@ class KeyLimitedReachedDialog(QDialog):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setModal(True)
 
+        self.loading_spinner = LoadingSpinner()
+
+
         # Create layout for the dialog
         layout = QVBoxLayout()
 
