@@ -2,9 +2,9 @@ from PyQt5.QtCore import QObject, QTimer, pyqtSignal
 from PyQt5.QtGui import QColor, QPainter
 from PyQt5.QtWidgets import QWidget
 import threading
-
-from gui.funs.rest import RestApiClient
-
+import requests
+from requests.exceptions import Timeout
+from rest_api_client import RestApiClient  # assuming this import is required
 
 class RestLed(QWidget):
     def __init__(self, url, endpoint, parent=None):
@@ -29,8 +29,16 @@ class RestLed(QWidget):
     def update_state(self):
         try:
             call = RestApiClient(base_url=self.url)
-            response = call.post(endpoint=self.endpoint)
-            self.state = response["success"]
+            response = None
+            try:
+                response = call.post(endpoint=self.endpoint, timeout=5)
+            except Timeout:
+                print("Timeout occurred while making REST call.")
+                self.state = False
+            if response and "success" in response:
+                self.state = response["success"]
+            else:
+                self.state = False
         except Exception as e:
             print("Error:", e)
             self.state = False
