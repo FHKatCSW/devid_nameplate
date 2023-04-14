@@ -4,7 +4,9 @@ from PyQt5.QtWidgets import QWidget
 import threading
 import requests
 from requests.exceptions import Timeout
-from rest_api_client import RestApiClient  # assuming this import is required
+
+from gui.funs.rest import RestApiClient
+
 
 class RestLed(QWidget):
     def __init__(self, url, endpoint, parent=None):
