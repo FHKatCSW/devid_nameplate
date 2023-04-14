@@ -577,7 +577,7 @@ class MyWindow(QMainWindow):
         # print(response)
         self.logger.info("*** HSM Key count: {}".format(str(json.dumps(response["hsm_key_cnt"]))))
         self.results_control_ldev.append(json.dumps(response["message"]))
-        self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
+        self.result_label_ldev.setText(repr(json.dumps(response["hsm_key_cnt"]))[2:-2])
 
     def load_actual_idev(self):
         # Show loading spinner in full screen when button is clicked
