@@ -79,6 +79,7 @@ class KeyLimitedReachedDialog(QDialog):
 
         # Add label to the layout
         label = QLabel("Maximum number of keys on HSM reached. Please please delete keys if you want to continue provisioning")
+        label.setWordWrap(True)
         layout.addWidget(label)
 
         # Add "Close" button to the layout
@@ -86,17 +87,29 @@ class KeyLimitedReachedDialog(QDialog):
         layout.addWidget(close_button)
         close_button.clicked.connect(self.close)
 
-        # Add "Generate REST call" button to the layout
+        # Delete all objects
 
         self.rest_thread_delete_all_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                    endpoint="/delete/keys-ldev",
+                                                    endpoint="/delete/keys-all",
                                                     delete=True)
         self.rest_thread_delete_all_keys.rest_response.connect(self.delete_all_keys_complete)
 
 
-        generate_button = QPushButton("Generate REST call")
-        layout.addWidget(generate_button)
-        generate_button.clicked.connect(self.delete_all_keys)
+        button_all_objects = QPushButton("Delete All Objects")
+        layout.addWidget(button_all_objects)
+        button_all_objects.clicked.connect(self.delete_all_keys)
+
+        # Delete LDev Objects
+
+        self.rest_thread_delete_ldev_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                    endpoint="/delete/keys-ldev",
+                                                    delete=True)
+        self.rest_thread_delete_ldev_keys.rest_response.connect(self.delete_ldev_keys_complete)
+
+
+        button_ldev_objects = QPushButton("Delete LDev Objects")
+        layout.addWidget(button_ldev_objects)
+        button_ldev_objects.clicked.connect(self.delete_ldev_keys)
 
         self.setLayout(layout)
 
@@ -118,6 +131,20 @@ class KeyLimitedReachedDialog(QDialog):
         self.loading_spinner.hide()
 
         response = self.rest_thread_delete_all_keys.response
+
+    def delete_ldev_keys(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_ldev_keys.start()
+
+    def delete_ldev_keys_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_ldev_keys.response
 
 
 
