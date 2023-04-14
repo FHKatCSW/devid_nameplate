@@ -89,7 +89,7 @@ class KeyLimitedReachedDialog(QDialog):
         # Add "Generate REST call" button to the layout
 
         self.rest_thread_delete_all_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                    endpoint="/mgmt/keys/keys-ldev",
+                                                    endpoint="/delete/keys-ldev",
                                                     delete=True)
         self.rest_thread_delete_all_keys.rest_response.connect(self.delete_all_keys_complete)
 
