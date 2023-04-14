@@ -1,11 +1,9 @@
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import QObject, QTimer, pyqtSignal
 from PyQt5.QtGui import QColor, QPainter
 from PyQt5.QtWidgets import QWidget
-from .rest import RestApiClient
+import threading
 
-import requests
-
-
+from gui.funs.rest import RestApiClient
 
 
 class RestLed(QWidget):
@@ -22,6 +20,11 @@ class RestLed(QWidget):
         self.timer.setInterval(30000)  # call API every 30 seconds
         self.timer.timeout.connect(self.update_state)
         self.timer.start()
+
+        # Create a thread for the update_state method
+        self.thread = threading.Thread(target=self.update_state)
+        self.thread.daemon = True
+        self.thread.start()
 
     def update_state(self):
         try:

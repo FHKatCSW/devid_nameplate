@@ -528,6 +528,8 @@ class MyWindow(QMainWindow):
         response = self.rest_thread_bootstrap_ldev_opc.response
         if response['success']:
             self.led_provision_ldev_opc.postive()
+            if int(json.dumps(response["hsm_key_cnt"])) >= 8:
+                self.key_limit_reached_dialog.show()
         else:
             self.led_provision_ldev_opc.negative()
         # print(response)
@@ -550,6 +552,8 @@ class MyWindow(QMainWindow):
         response = self.rest_thread_bootstrap_ldev_azure.response
         if response['success']:
             self.led_provision_ldev_azure.postive()
+            if int(json.dumps(response["hsm_key_cnt"])) >= 8:
+                self.key_limit_reached_dialog.show()
         else:
             self.led_provision_ldev_azure.negative()
         # print(response)
