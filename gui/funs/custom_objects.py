@@ -98,6 +98,8 @@ class KeyLimitedReachedDialog(QDialog):
         layout.addWidget(generate_button)
         generate_button.clicked.connect(self.delete_all_keys)
 
+        self.adjustSize()
+
         # Set background color
         self.setStyleSheet("background-color: #FFFFFF;")
 
