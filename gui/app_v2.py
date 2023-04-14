@@ -147,6 +147,30 @@ class MyWindow(QMainWindow):
         close_button.clicked.connect(self.close)
         self.status_grid.addWidget(close_button)
 
+        # Delete all objects
+
+        self.rest_thread_delete_all_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                    endpoint="/delete/keys-all",
+                                                    delete=True)
+        self.rest_thread_delete_all_keys.rest_response.connect(self.delete_all_keys_complete)
+
+
+        button_delete_all_objects = QPushButton("Delete All Objects")
+        self.status_grid.addWidget(button_delete_all_objects)
+        button_delete_all_objects.clicked.connect(self.delete_all_keys)
+
+        # Delete LDev Objects
+
+        self.rest_thread_delete_ldev_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                    endpoint="/delete/keys-ldev",
+                                                    delete=True)
+        self.rest_thread_delete_ldev_keys.rest_response.connect(self.delete_ldev_keys_complete)
+
+
+        button_delete_ldev_objects = QPushButton("Delete LDev Objects")
+        self.status_grid.addWidget(button_delete_ldev_objects)
+        button_delete_ldev_objects.clicked.connect(self.delete_ldev_keys)
+
         # ------------------
         # Control IDevID
         # ------------------
@@ -629,6 +653,37 @@ class MyWindow(QMainWindow):
                 self.result_actual_ldev.setText(new_cert_string)
         except Exception as err:
             self.result_actual_ldev.setText(str(err))
+
+    def delete_all_keys(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_all_keys.start()
+
+    def delete_all_keys_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_all_keys.response
+        self.logger.info(repr(json.dumps(response["message"]))[2:-2])
+
+    def delete_ldev_keys(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_ldev_keys.start()
+
+    def delete_ldev_keys_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_ldev_keys.response
+        self.logger.info(repr(json.dumps(response["message"]))[2:-2])
+
 
 
 if __name__ == '__main__':
