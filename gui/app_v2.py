@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget, QPus
 from PyQt5.QtGui import QIcon
 
 from gui.funs.custom_objects import StatusLabel, QTextEditHandler, StatusIndicator, IconWithSize, NameplateHeader, \
-    NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner, OutputLabel
+    NameplateLabel, NameplateLabelHeader, CertOutput, LoadingSpinner, OutputLabel, KeyLimitedReachedDialog
 from gui.funs.status_led import RestLed
 from gui.funs.rest_threads import RestThread
 
@@ -77,6 +77,7 @@ class MyWindow(QMainWindow):
 
         # Create loading spinner
         self.loading_spinner = LoadingSpinner()
+        self.key_limit_reached_dialog = KeyLimitedReachedDialog()
 
         # ------------------
         # Tab for Status
@@ -465,7 +466,7 @@ class MyWindow(QMainWindow):
         self.led_delete_ldev.reset()
         self.led_provision_ldev_opc.reset()
         self.led_provision_ldev_azure.reset()
-        self.led_provision_ldev_azure.reset()
+        self.led_provision_ldev_aws.reset()
 
     def validate_ldev(self):
         # Show loading spinner in full screen when button is clicked
@@ -574,6 +575,7 @@ class MyWindow(QMainWindow):
         else:
             self.led_provision_ldev_aws.negative()
         # print(response)
+        self.logger.info("*** HSM Key count: {}".format(json.dumps(response["hsm_key_cnt"])))
         self.results_control_ldev.append(json.dumps(response["message"]))
         self.result_label_ldev.setText(repr(json.dumps(response["message"]))[2:-2])
 

@@ -1,7 +1,9 @@
 from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtGui import QFont, QPainter, QColor, QPen, QPixmap, QMovie
-from PyQt5.QtWidgets import QVBoxLayout, QLabel, QDialog
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QDialog, QPushButton
 import logging
+
+from gui.funs.rest_threads import RestThread
 
 
 class NameplateLabel(QLabel):
@@ -60,6 +62,64 @@ class StatusIndicator(QLabel):
 
     def reset(self):
         self.setStyleSheet("background-color: #d9d9d9;")
+
+class KeyLimitedReachedDialog(QDialog):
+    def __init__(self):
+        super(KeyLimitedReachedDialog, self).__init__()
+
+        # Set dialog properties
+        self.setWindowTitle('Key limit reached')
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setModal(True)
+
+        self.loading_spinner = LoadingSpinner()
+
+        # Create layout for the dialog
+        layout = QVBoxLayout()
+
+        # Add label to the layout
+        label = QLabel("Maximum number of keys on HSM reached. Please please delete keys if you want to continue provisioning")
+        layout.addWidget(label)
+
+        # Add "Close" button to the layout
+        close_button = QPushButton("Dismiss")
+        layout.addWidget(close_button)
+        close_button.clicked.connect(self.close)
+
+        # Add "Generate REST call" button to the layout
+
+        self.rest_thread_delete_all_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
+                                                    endpoint="/mgmt/keys/delete-all",
+                                                    delete=True)
+        self.rest_thread_delete_all_keys.rest_response.connect(self.delete_all_keys_complete)
+
+
+        generate_button = QPushButton("Generate REST call")
+        layout.addWidget(generate_button)
+        generate_button.clicked.connect(self.delete_all_keys)
+
+        # Set background color
+        self.setStyleSheet("background-color: #FFFFFF;")
+
+    def delete_all_keys(self):
+        # Show loading spinner in full screen when button is clicked
+        self.loading_spinner.setWindowState(
+            self.loading_spinner.windowState() | Qt.WindowFullScreen)  # Set the window to be fullscreen
+        self.loading_spinner.show()
+
+        self.rest_thread_delete_all_keys.start()
+
+    def delete_all_keys_complete(self):
+        # Hide loading spinner when REST call is complete
+        self.loading_spinner.hide()
+
+        response = self.rest_thread_delete_all_keys.response
+        if response['success']:
+            self.led_validate_ldev.postive()
+        else:
+            self.led_validate_ldev.negative()
+
+
 
 
 class LoadingSpinner(QDialog):
