@@ -13,7 +13,7 @@ class RestApiClient(QThread):
         global response
         try:
             headers = {'accept': 'application/json'}
-            response = requests.get(url, params=params, headers=headers)
+            response = requests.get(url, params=params, headers=headers, timeout=5)
             response.raise_for_status()
             response = json.loads(response.text)
         except requests.exceptions.RequestException as e:
@@ -30,7 +30,7 @@ class RestApiClient(QThread):
         global response
         try:
             headers = {'accept': 'application/json'}
-            response = requests.post(url, json=data, headers=headers)
+            response = requests.post(url, json=data, headers=headers, timeout=5)
             response.raise_for_status()
             response = json.loads(response.text)
         except requests.exceptions.RequestException as e:
@@ -47,7 +47,7 @@ class RestApiClient(QThread):
         global response
         try:
             headers = {'accept': 'application/json'}
-            response = requests.delete(url, params=params, headers=headers)
+            response = requests.delete(url, params=params, headers=headers, timeout=5)
             response.raise_for_status()
             response = json.loads(response.text)
         except requests.exceptions.RequestException as e:

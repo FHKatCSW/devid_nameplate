@@ -18,22 +18,20 @@ class RestLed(QWidget):
         self.color_off = QColor(255,99,71)
         self.state = False
 
+        self.update_state()  # Call update_state when initialized
+
+        # Create a timer to call update_state every 30 seconds
         self.timer = QTimer(self)
         self.timer.setInterval(30000)  # call API every 30 seconds
         self.timer.timeout.connect(self.update_state)
         self.timer.start()
-
-        # Create a thread for the update_state method
-        self.thread = threading.Thread(target=self.update_state)
-        self.thread.daemon = True
-        self.thread.start()
 
     def update_state(self):
         try:
             call = RestApiClient(base_url=self.url)
             response = None
             try:
-                response = call.post(endpoint=self.endpoint, timeout=5)
+                response = call.post(endpoint=self.endpoint)
             except Timeout:
                 print("Timeout occurred while making REST call.")
                 self.state = False
