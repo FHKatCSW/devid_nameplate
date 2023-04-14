@@ -82,14 +82,14 @@ class KeyLimitedReachedDialog(QDialog):
         layout.addWidget(label)
 
         # Add "Close" button to the layout
-        close_button = QPushButton("Dismiss")
+        close_button = QPushButton("Close")
         layout.addWidget(close_button)
         close_button.clicked.connect(self.close)
 
         # Add "Generate REST call" button to the layout
 
         self.rest_thread_delete_all_keys = RestThread(base_url='http://0.0.0.0:5000/v1',
-                                                    endpoint="/mgmt/keys/delete-all",
+                                                    endpoint="/mgmt/keys/keys-ldev",
                                                     delete=True)
         self.rest_thread_delete_all_keys.rest_response.connect(self.delete_all_keys_complete)
 
@@ -114,10 +114,6 @@ class KeyLimitedReachedDialog(QDialog):
         self.loading_spinner.hide()
 
         response = self.rest_thread_delete_all_keys.response
-        if response['success']:
-            self.led_validate_ldev.postive()
-        else:
-            self.led_validate_ldev.negative()
 
 
 

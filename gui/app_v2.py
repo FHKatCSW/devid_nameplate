@@ -572,6 +572,8 @@ class MyWindow(QMainWindow):
         response = self.rest_thread_bootstrap_ldev_aws.response
         if response['success']:
             self.led_provision_ldev_aws.postive()
+            if int(json.dumps(response["hsm_key_cnt"])) >= 8:
+                self.key_limit_reached_dialog.show()
         else:
             self.led_provision_ldev_aws.negative()
         # print(response)
